@@ -1,0 +1,32 @@
+version: "3.8"
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    environment:
+      - MYSQL_DATABASE=home
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_USER = home
+      - MYSQL_PASSWORD=1234
+      - MYSQL_ROOT_PASSWORD=1234
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    restart: unless-stopped
+    networks:
+      - home_network
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./data/redis:/data
+    restart: always
+    networks:
+      - home_network
+networks:
+  home_network:
+    external: true

@@ -1,3 +1,13 @@
 home/
 logs/
 .idea/
+mysql/
+redis/
+grafana/
+!grafana/env.grafana
+prometheus/
+!prometheus/config/prometheus.yml
+!prometheus/config/rule.yml
+certbot/
+nginx-proxy-manager/
+application.yml

@@ -1,31 +1,13 @@
 # Backend Docker Compose
 version: "3.7"
 services:
-
-  mysql:
-    image: mysql:latest
-    container_name: mysql
-    environment:
-      - MYSQL_DATABASE=home
-      - MYSQL_ROOT_HOST=%
-      - MYSQL_ROOT_PASSWORD=1234
-    ports:
-      - "3306:3306"
-    volumes:
-      - ./data/mysql:/var/lib/mysql
-    networks:
-      - home_network
-    restart: always
-
   springboot:
     build:
       context: home_server
       dockerfile: Dockerfile
     restart: always
-    depends_on:
-      - mysql
     ports:
-      - "8080:8080"
+      - "8000:8000"
     container_name: home
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/home?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
@@ -34,19 +16,6 @@ services:
       SPRING_PROFILES_ACTIVE: dev
     networks:
       - home_network
-
-
-  redis:
-    image: redis:latest
-    container_name: redis
-    ports:
-      - "6379:6379"
-    restart: always
-    volumes:
-      - ./data/redis:/data
-    networks:
-      - home_network
-
 networks:
   home_network:
-    driver: bridge
+      external: true

@@ -41,8 +41,17 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-json'
 
 	// Swagger
-	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+	implementation("org.springdoc:springdoc-openapi-ui:1.6.11")
+//	implementation 'io.springfox:springfox-boot-starter:3.0.0'
 	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+
+	// Actuator
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+
+	// Prometheus
+	implementation 'io.micrometer:micrometer-registry-prometheus'
+	implementation 'io.micrometer:micrometer-core'
 
 }
 
