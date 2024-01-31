@@ -40,7 +40,7 @@ jobs:
           username: ${{ secrets.REMOTE_SSH_USERNAME }}
           key: ${{ secrets.REMOTE_SSH_SECRET_KEY }}
           port: ${{ secrets.REMOTE_SSH_PORT }}
-          passphrase: ${{ secrets.REMOTE_SSH_PASSPHRASE }}
+          passphrase: ${{ secrets.REMOTES_SSH_PASSPHRASE }}
           timeout: 40s 
           
           script: |
