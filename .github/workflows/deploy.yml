@@ -1,0 +1,149 @@
+name: ssh for main deploy # workflow의 이름을 지정해준다.
+
+on: # 작동 트리거로 설정할 부분을 작성하는 곳이다.
+  push: # 이 스크립트는 개발서버용 이므로 dev 브렌치에 push될 때 작동하도록 해두었다.
+    branches: [ main ]
+
+# jobs에선 action의 단계(step)를 설정할 수 있다. 
+# 여러 개의 job을 사용할 수 있고, job끼리 서로 정보를 교환할 수도 있다.
+jobs: 
+  deploy:
+    name: Deploy # job의 이름을 지정해 준다.
+    runs-on: ubuntu-latest # job을 실행할 환경을 정해준다.
+
+    steps:
+      # Github Actions는 해당 프로젝트를 리눅스 환경에 checkout하고 나서 실행한다.
+      # 꼭 필요한 과정!
+      # 누가 만들어 놓은 Action을 사용할 때에는 uses 키워드를 사용한다.
+      - uses: actions/checkout@v3.3.0
+
+      - uses: dorny/paths-filter@v2.11.1
+        id: changes
+        with:
+          filters: |
+            back:
+              - 'back/**'
+            front:
+              - 'front/**'
+            devops:
+              - 'devops/**'
+            database"
+              - 'database/**'
+
+	    # step의 이름을 지정해준다.
+      - name: deploy backend with connecting My PC via SSH
+        if: steps.changes.outputs.back == 'true'
+      # 위에 말했던 appleboy의 Action을 사용
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_SSH_HOST }}
+          username: ${{ secrets.REMOTE_SSH_USERNAME }}
+          key: ${{ secrets.REMOTE_SSH_SECRET_KEY }}
+          port: ${{ secrets.REMOTE_SSH_PORT }}
+          passphrase: ${{ secrets.REMOTE_SSH_PASSPHRASE }}
+          timeout: 40s 
+          
+          script: |
+            echo "# BACKEND DEPLOYING START!!!"
+            cd ~/home/back
+            
+            echo "############# GIT PULL #############"
+            pass=$(sudo git pull origin main)
+            echo $pass
+            if [ -n "$pass" ]; then 
+              echo "############# Processing for Backend Deploy #############"
+              build='Successfully built'
+              sudo docker compose -f docker-compose.back.yml up -d --build
+            else
+              echo "############## Git Pull: Error ##############"
+              exit 1;
+            fi
+            echo "############### Finish Backend  ##############"
+###########################################################################
+      - name: deploy frontend with connecting My PC via SSH
+        if: steps.changes.outputs.frontend == 'true'
+      # 위에 말했던 appleboy의 Action을 사용
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_SSH_HOST }}
+          username: ${{ secrets.REMOTE_SSH_USERNAME }}
+          key: ${{ secrets.REMOTE_SSH_SECRET_KEY }}
+          port: ${{ secrets.REMOTE_SSH_PORT }}
+          passphrase: ${{ secrets.REMOTE_SSH_PASSPHRASE }}
+          timeout: 40s 
+          
+          script: |
+            echo "# FRONTEND DEPLOYING START!!!"
+            cd ~/home/frontend
+            
+            echo "############# GIT PULL #############"
+            pass=$(sudo git pull origin main)
+            echo $pass
+            if [ -n "$pass" ]; then 
+              echo "############# Processing for Frontend Deploy #############"
+              build='Successfully built'
+              sudo docker compose -f docker-compose.front.yml up -d --build
+            else
+              echo "############## Git Pull: Error ##############"
+              exit 1;
+            fi
+            echo "############### Finish Frontend  ##############"
+###########################################################################            
+      - name: deploy database with connecting My PC via SSH
+        if: steps.changes.outputs.database == 'true'
+      # 위에 말했던 appleboy의 Action을 사용
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_SSH_HOST }}
+          username: ${{ secrets.REMOTE_SSH_USERNAME }}
+          key: ${{ secrets.REMOTE_SSH_SECRET_KEY }}
+          port: ${{ secrets.REMOTE_SSH_PORT }}
+          passphrase: ${{ secrets.REMOTE_SSH_PASSPHRASE }}
+          timeout: 40s 
+          
+          script: |
+            echo "# DATABASE DEPLOYING START!!!"
+            cd ~/home/database
+            
+            echo "############# GIT PULL #############"
+            pass=$(sudo git pull origin main)
+            echo $pass
+            if [ -n "$pass" ]; then 
+              echo "############# Processing for Frontend Deploy #############"
+              build='Successfully built'
+              sudo docker compose -f docker-compose.database.yml up -d --build
+            else
+              echo "############## Git Pull: Error ##############"
+              exit 1;
+            fi
+            echo "############### Finish Database  ##############"
+
+###########################################################################            
+      - name: deploy devops with connecting My PC via SSH
+        if: steps.changes.outputs.devops == 'true'
+      # 위에 말했던 appleboy의 Action을 사용
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_SSH_HOST }}
+          username: ${{ secrets.REMOTE_SSH_USERNAME }}
+          key: ${{ secrets.REMOTE_SSH_SECRET_KEY }}
+          port: ${{ secrets.REMOTE_SSH_PORT }}
+          passphrase: ${{ secrets.REMOTE_SSH_PASSPHRASE }}
+          timeout: 40s 
+          
+          script: |
+            echo "# DEVOPS DEPLOYING START!!!"
+            cd ~/home/devops
+            
+            echo "############# GIT PULL #############"
+            pass=$(sudo git pull origin main)
+            echo $pass
+            if [ -n "$pass" ]; then 
+              echo "############# Processing for DevOps Deploy #############"
+              build='Successfully built'
+              sudo docker compose -f docker-compose.devops.yml up -d --build
+            else
+              echo "############## Git Pull: Error ##############"
+              exit 1;
+            fi
+            echo "############### Finish DevOps  ##############"            
