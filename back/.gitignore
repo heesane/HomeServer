@@ -2,3 +2,4 @@ mysql/
 redis/
 .idea/
 application.properties
+application.yml
