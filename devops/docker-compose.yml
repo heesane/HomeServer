@@ -1,18 +1,21 @@
 version: "3.8"
+
+volumes:
+   portainer:
+     driver: local
+
 services:
-  nginx:
-    image: nginx:latest
-    container_name: nginx
-    restart: always
+  portainer:
+    image: portainer/portainer:latest
     ports:
-      - "80:80"
-      - "443:443"
+      - "9000:9000"
+    restart: always
     volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/html:/usr/share/nginx/html
+      - portainer:/data
+      - /var/run/docker.sock:/var/run/docker.sock 
     networks:
       - home_network
+ 
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
@@ -92,10 +95,10 @@ services:
       - DB_MYSQL_PASSWORD = 1234
       - DB_MYSQL_NAME = home
     volumes:
-        - ./nginx-proxy-manager/data:/data
-        - ./nginx-proxy-manager/letsencrypt:/etc/letsencrypt
-
-
+      - ./nginx-proxy-manager/data:/data
+      - ./nginx-proxy-manager/letsencrypt:/etc/letsencrypt
+    networks:
+      - home_network
 networks:
   home_network:
     external: true

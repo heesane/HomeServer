@@ -11,3 +11,8 @@ prometheus/
 certbot/
 nginx-proxy-manager/
 application.yml
+.vscode/
+node_modules/
+.next/
+.swc/
+.*.env
