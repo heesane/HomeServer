@@ -31,7 +31,6 @@ jobs:
               - 'database/**'
       
       - name: Default Deploy
-        if: steps.changes.outputs.back == 'true' || steps.changes.outputs.front == 'true' || steps.changes.outputs.devops == 'true' || steps.changes.outputs.database == 'true'
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.REMOTE_SSH_HOST }}
