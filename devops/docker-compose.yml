@@ -7,6 +7,7 @@ volumes:
 services:
   portainer:
     image: portainer/portainer:latest
+    container_name: portainer
     ports:
       - "9000:9000"
     restart: always
@@ -82,7 +83,7 @@ services:
 
   nginx-proxy-manager:
     image: 'jc21/nginx-proxy-manager:latest'
-    container_name: nginx-proxy-manager
+    container_name: npm
     restart: unless-stopped
     ports:
       - '80:80'
