@@ -37,7 +37,6 @@ jobs:
           username: ${{ secrets.REMOTE_SSH_USERNAME }}
           password: ${{ secrets.REMOTE_SSH_PASSWORD}}
           port: ${{ secrets.REMOTE_SSH_PORT }}
-          passphrase: ${{ secrets.REMOTE_SSH_PASSPHRASE }}
           timeout: 40s
           script: |
             echo "##Default CICD##"
