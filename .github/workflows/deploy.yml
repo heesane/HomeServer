@@ -41,16 +41,7 @@ jobs:
           timeout: 40s
           script: |
             echo "##Default CICD##"
-            echo "############# GIT PULL #############"
-            pass=$(sudo git pull origin main)
-            echo $pass
-            if [ -n "$pass" ]; then 
-              echo "############# Processing for Default Deploy #############"
-            else
-              echo "############## Git Pull: Error ##############"
-              exit 1;
-            fi
-            echo "############### Finish Default  ##############"
+            
 
       # step의 이름을 지정해준다.
       - name: deploy backend with connecting My PC via SSH
