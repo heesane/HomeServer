@@ -29,6 +29,29 @@ jobs:
               - 'devops/**'
             database:
               - 'database/**'
+      
+      - name: Default Deploy
+        if: steps.changes.outputs.back == 'true' || steps.changes.outputs.front == 'true' || steps.changes.outputs.devops == 'true' || steps.changes.outputs.database == 'true'
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_SSH_HOST }}
+          username: ${{ secrets.REMOTE_SSH_USERNAME }}
+          key: ${{ secrets.REMOTE_SSH_SECRET_KEY }}
+          port: ${{ secrets.REMOTE_SSH_PORT }}
+          passphrase: ${{ secrets.REMOTE_SSH_PASSPHRASE }}
+          timeout: 40s
+          script: |
+            echo "##Default CICD##"
+            echo "############# GIT PULL #############"
+            pass=$(sudo git pull origin main)
+            echo $pass
+            if [ -n "$pass" ]; then 
+              echo "############# Processing for Default Deploy #############"
+            else
+              echo "############## Git Pull: Error ##############"
+              exit 1;
+            fi
+            echo "############### Finish Default  ##############"
 
       # step의 이름을 지정해준다.
       - name: deploy backend with connecting My PC via SSH
@@ -109,7 +132,7 @@ jobs:
             pass=$(sudo git pull origin main)
             echo $pass
             if [ -n "$pass" ]; then 
-              echo "############# Processing for Frontend Deploy #############"
+              echo "############# Processing for Database Deploy #############"
               build='Successfully built'
               sudo docker compose -f docker-compose.database.yml up -d --build
             else
