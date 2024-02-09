@@ -41,7 +41,7 @@ jobs:
           script: |
             echo "##Default CICD##"
             echo "############# GIT PULL #############"
-            pass=$(sudo git pull origin main)
+            pass=$(git pull origin main)
             echo $pass
             if [ -n "$pass" ]; then 
               echo "############# Processing for Default Deploy #############"
