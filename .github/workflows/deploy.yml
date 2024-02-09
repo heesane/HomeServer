@@ -41,6 +41,7 @@ jobs:
           script: |
             echo "##Default CICD##"
             echo "############# GIT PULL #############"
+            cd ~/server
             pass=$(git pull origin main)
             echo $pass
             if [ -n "$pass" ]; then 
