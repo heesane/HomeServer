@@ -62,24 +62,14 @@ jobs:
           username: ${{ secrets.REMOTE_SSH_USERNAME }}
           password: ${{ secrets.REMOTE_SSH_PASSWORD}}
           port: ${{ secrets.REMOTE_SSH_PORT }}
-          passphrase: ${{ secrets.REMOTE_SSH_PASSPHRASE }}
           timeout: 40s 
           
           script: |
             echo "# BACKEND DEPLOYING START!!!"
-            cd ~/home/back
-            
-            echo "############# GIT PULL #############"
-            pass=$(sudo git pull origin main)
-            echo $pass
-            if [ -n "$pass" ]; then 
-              echo "############# Processing for Backend Deploy #############"
-              build='Successfully built'
-              sudo docker compose -f docker-compose.back.yml up -d --build
-            else
-              echo "############## Git Pull: Error ##############"
-              exit 1;
-            fi
+            cd ~/server/back
+            echo "############# Processing for Backend Deploy #############"
+            build='Successfully built'
+            docker compose -f docker-compose.back.yml up -d --build
             echo "############### Finish Backend  ##############"
       ###########################################################################
       - name: deploy frontend with connecting My PC via SSH
@@ -91,24 +81,14 @@ jobs:
           username: ${{ secrets.REMOTE_SSH_USERNAME }}
           password: ${{ secrets.REMOTE_SSH_PASSWORD}}
           port: ${{ secrets.REMOTE_SSH_PORT }}
-          passphrase: ${{ secrets.REMOTE_SSH_PASSPHRASE }}
           timeout: 40s 
           
           script: |
             echo "# FRONTEND DEPLOYING START!!!"
-            cd ~/home/frontend
-            
-            echo "############# GIT PULL #############"
-            pass=$(sudo git pull origin main)
-            echo $pass
-            if [ -n "$pass" ]; then 
-              echo "############# Processing for Frontend Deploy #############"
-              build='Successfully built'
-              sudo docker compose -f docker-compose.front.yml up -d --build
-            else
-              echo "############## Git Pull: Error ##############"
-              exit 1;
-            fi
+            cd ~/server/front
+            echo "############# Processing for Frontend Deploy #############"
+            build='Successfully built'
+            docker compose -f docker-compose.front.yml up -d --build
             echo "############### Finish Frontend  ##############"
       ###########################################################################            
       - name: deploy database with connecting My PC via SSH
@@ -120,24 +100,14 @@ jobs:
           username: ${{ secrets.REMOTE_SSH_USERNAME }}
           password: ${{ secrets.REMOTE_SSH_PASSWORD}}
           port: ${{ secrets.REMOTE_SSH_PORT }}
-          passphrase: ${{ secrets.REMOTE_SSH_PASSPHRASE }}
           timeout: 40s 
           
           script: |
             echo "# DATABASE DEPLOYING START!!!"
-            cd ~/home/database
-            
-            echo "############# GIT PULL #############"
-            pass=$(sudo git pull origin main)
-            echo $pass
-            if [ -n "$pass" ]; then 
-              echo "############# Processing for Database Deploy #############"
-              build='Successfully built'
-              sudo docker compose -f docker-compose.database.yml up -d --build
-            else
-              echo "############## Git Pull: Error ##############"
-              exit 1;
-            fi
+            cd ~/server/database
+            echo "############# Processing for Database Deploy #############"
+            build='Successfully built'
+            docker compose -f docker-compose.database.yml up -d --build
             echo "############### Finish Database  ##############"
       ###########################################################################            
       - name: deploy devops with connecting My PC via SSH
@@ -149,22 +119,12 @@ jobs:
           username: ${{ secrets.REMOTE_SSH_USERNAME }}
           password: ${{ secrets.REMOTE_SSH_PASSWORD}}
           port: ${{ secrets.REMOTE_SSH_PORT }}
-          passphrase: ${{ secrets.REMOTE_SSH_PASSPHRASE }}
           timeout: 40s 
           
           script: |
             echo "# DEVOPS DEPLOYING START!!!"
-            cd ~/home/devops
-            
-            echo "############# GIT PULL #############"
-            pass=$(sudo git pull origin main)
-            echo $pass
-            if [ -n "$pass" ]; then 
-              echo "############# Processing for DevOps Deploy #############"
-              build='Successfully built'
-              sudo docker compose -f docker-compose.devops.yml up -d --build
-            else
-              echo "############## Git Pull: Error ##############"
-              exit 1;
-            fi
+            cd ~/server/devops
+            echo "############# Processing for DevOps Deploy #############"
+            build='Successfully built'
+            docker compose -f docker-compose.devops.yml up -d --build
             echo "############### Finish DevOps  ##############"
