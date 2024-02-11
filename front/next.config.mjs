@@ -1,16 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-    output: "standalone",
-
-    async rewrites() {
-        return [
-            {
-                source: "/:path*",
-                destination: "/:path*",
-
-            }
-        ]
-    }
-};
+const nextConfig = {};
 
 export default nextConfig;
