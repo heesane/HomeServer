@@ -22,6 +22,11 @@ export function Pagination() {
         </li>
         <li>
           <a className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200" href="#">
+            3
+          </a>
+        </li>
+        <li>
+          <a className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200" href="#">
             Next
           </a>
         </li>
