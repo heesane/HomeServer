@@ -1,5 +1,5 @@
 import Link from 'next/link';
-
+import { DarkModeToggle } from './dark-mode-toggle';
 export default function Topbar() {
   return (
     <header className="border-b">
@@ -18,6 +18,9 @@ export default function Topbar() {
               Contact
             </Link>
           </nav>
+          <div className='ml-4'>
+          <DarkModeToggle/>
+          </div>
         </div>
       </header>
   );
