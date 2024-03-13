@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import MainPicture from "./public/images/zzanggu.jpeg"
+import MainPicture from "@/app/public/images/zzanggu.jpeg"
 export default function Portfolio(){
 	return (
 		<div className = "m-24 flex">
