@@ -1,7 +1,5 @@
-import Image from "next/image";
-import Lowbar from "@/app/components/Lowbar";
-import Topbar from "@/app/components/Topbar";
-import { DarkModeToggle } from "./components/dark-mode-toggle";
+// 메인 페이지
+
 
 export default function Home() {
   return (

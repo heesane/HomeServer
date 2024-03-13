@@ -9,8 +9,8 @@ import { DarkModeToggle } from "./components/dark-mode-toggle";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "HeeSang Portfolio",
-  description: "Portfolio of HeeSang",
+  title: "Portfolio",
+  description: "Portfolio",
   icons: {
       icon: "/favicon.ico",
     },
