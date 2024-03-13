@@ -78,6 +78,7 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
     depends_on:
       - prometheus
+    restart: always
     networks:
       - home_network
 
