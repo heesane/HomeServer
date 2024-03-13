@@ -1,10 +1,9 @@
 import Link from 'next/link';
-
+import Portfolio from './portpolio';
 export default function About() {
   return (
     <div>
-      <h1>About</h1>
-      <p>This is the About page content.</p>
+      <Portfolio/>
     </div>
   );
 }

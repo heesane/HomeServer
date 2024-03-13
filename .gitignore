@@ -17,3 +17,5 @@ node_modules/
 .swc/
 .*.env
 .env
+fast/
+__pycache__/

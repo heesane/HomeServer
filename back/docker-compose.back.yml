@@ -16,6 +16,18 @@ services:
       SPRING_PROFILES_ACTIVE: dev
     networks:
       - home_network
+
+  celery:
+    build:
+      context: celery
+      dockerfile: Dockerfile
+    restart: always
+    container_name: celery
+    command: celery -A home worker --loglevel=info
+    environment:
+      - C_FORCE_ROOT=true
+    networks:
+      - home_network
 networks:
   home_network:
       external: true
