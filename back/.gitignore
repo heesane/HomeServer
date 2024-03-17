@@ -4,3 +4,4 @@ redis/
 application.properties
 application.yml
 alembic.ini
+server_log.txt
