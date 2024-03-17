@@ -1,5 +1,4 @@
 migrations/
 alembic.ini
 Dockerfile
-requirements.txt
 server_log.txt
