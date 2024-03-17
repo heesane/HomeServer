@@ -1,4 +1,2 @@
 migrations/
 alembic.ini
-Dockerfile
-server_log.txt
