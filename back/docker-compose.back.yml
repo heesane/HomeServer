@@ -17,15 +17,29 @@ services:
     networks:
       - home_network
 
-  celery:
+  # celery:
+  #   build:
+  #     context: celery
+  #     dockerfile: Dockerfile
+  #   restart: always
+  #   container_name: celery
+  #   command: celery -A home worker --loglevel=info
+  #   environment:
+  #     - C_FORCE_ROOT=true
+  #   networks:
+  #     - home_network
+  
+  fastapi:
     build:
-      context: celery
+      context: fastapi
       dockerfile: Dockerfile
     restart: always
-    container_name: celery
-    command: celery -A home worker --loglevel=info
-    environment:
-      - C_FORCE_ROOT=true
+    ports:
+      - "8001:8001"
+    container_name: fastapi
+    command: uvicorn main:app --host 0.0.0.0 --port 8001 --reload
+    volumes:
+      - ./fastapi:/app
     networks:
       - home_network
 networks:
