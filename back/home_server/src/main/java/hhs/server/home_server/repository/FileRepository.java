@@ -1,6 +1,6 @@
 package hhs.server.home_server.repository;
 
-import hhs.server.home_server.model.FileEntity;
+import hhs.server.home_server.entity.FileEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
