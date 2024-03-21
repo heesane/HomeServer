@@ -1,10 +1,11 @@
 package hhs.server.home_server.entity;
 
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+
 
 @NoArgsConstructor
 @Table(name="file")
