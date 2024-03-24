@@ -32,6 +32,14 @@ if git status | grep -q "nothing to commit, working tree clean"; then
   echo "No changes detected at $DATE" >> "$LOG_FILE"
 else
   echo "Changes detected" >> "$LOG_FILE"
+  pass=$(git pull origin main)
+  echo "$pass"
+  if [ -n "$pass" ]; then
+    echo "Git Pull Successful" >> "$LOG_FILE"
+  else
+    echo "Git Pull Failed" >> "$LOG_FILE"
+    exit 1;
+  fi
   sudo run_server.sh 2>&1
 fi
 echo "---------------------------------" >> "$LOG_FILE"
