@@ -34,4 +34,5 @@ sudo chmod +x "/home/$USER/server/$GIT_SCRIPT_NAME"
 if ! (crontab -l | grep -q "$CRON_JOB_ESCAPED"); then
   # Add the cron job to the crontab
   (crontab -l 2>/dev/null; echo "$CRON_JOB") | crontab -
+  ehco "Cron Job Installed"
 fi
