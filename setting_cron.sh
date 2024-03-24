@@ -6,6 +6,7 @@
 
 # Global Variable
 CRON_FILE_NAME="detect_git_status_script.sh"
+GIT_SCRIPT_NAME="run_server.sh"
 CRON_JOB="0 */2 * * * /bin/bash /home/$USER/server/$CRON_FILE_NAME"
 CRON_JOB_ESCAPED=$(printf '%s\n' "$CRON_JOB" | sed 's:[][\/.^$*]:\\&:g')
 
@@ -27,6 +28,7 @@ fi
 # If the file is found, change the permission
 # Because the cron job will be run as root user
 sudo chmod +x "/home/$USER/server/$CRON_FILE_NAME"
+sudo chmod +x "/home/$USER/server/$GIT_SCRIPT_NAME"
 
 # Check if the cron job is already running
 if ! (crontab -l | grep -q "$CRON_JOB_ESCAPED"); then
