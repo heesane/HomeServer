@@ -21,6 +21,7 @@ if [ ! -f "$LOG_FILE" ]; then
 fi
 
 # Log the date and a separator for readability
+# PLEASE SET LANGUAGE TO ENGLISH
 echo -e "Date: $DATE\nGit Status:" >> "$LOG_FILE"
 
 # Change the directory to the repository
