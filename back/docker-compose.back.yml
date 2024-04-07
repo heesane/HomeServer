@@ -2,9 +2,7 @@
 version: "3.7"
 services:
   springboot:
-    build:
-      context: home_server
-      dockerfile: Dockerfile
+    image: heesane/java-springboot3-jdk17:latest
     restart: always
     ports:
       - "8000:8000"
@@ -30,9 +28,7 @@ services:
   #     - home_network
   
   fastapi:
-    build:
-      context: fastapi
-      dockerfile: Dockerfile
+    image: heesane/python-fastapi
     restart: always
     ports:
       - "8001:8001"
