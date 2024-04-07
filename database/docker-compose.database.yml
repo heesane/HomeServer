@@ -27,6 +27,19 @@ services:
     restart: always
     networks:
       - home_network
+  pgadmin:
+    image: "dpage/pgadmin4:latest"
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: tees3359@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: 1234
+    volumes:
+      - ./data/pgadmin/:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    restart: always
+    networks:
+      - home_network
 networks:
   home_network:
     external: true
