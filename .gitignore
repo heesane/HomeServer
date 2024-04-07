@@ -5,6 +5,7 @@ mysql/
 redis/
 pgadmin/
 grafana/
+pgadmin/
 !grafana/env.grafana
 prometheus/
 !prometheus/config/prometheus.yml

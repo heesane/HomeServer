@@ -28,7 +28,11 @@ services:
   #     - home_network
   
   fastapi:
+<<<<<<< HEAD
     image: heesane/python-fastapi
+=======
+    image: heesane/python-fastapi:latest
+>>>>>>> 9119391edc02c2d45f90283d5db69b993595ff5c
     restart: always
     ports:
       - "8001:8001"
