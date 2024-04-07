@@ -6,3 +6,9 @@ services:
       - "5672:5672"
       - "15672:15672"
     restart: unless-stopped
+    container_name: rabbitmq
+    networks:
+      - home_network
+networks:
+  home_network:
+    external: true

@@ -3,6 +3,7 @@ logs/
 .idea/
 mysql/
 redis/
+pgadmin/
 grafana/
 !grafana/env.grafana
 prometheus/

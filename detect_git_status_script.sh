@@ -27,6 +27,9 @@ echo -e "Date: $DATE\nGit Status:" >> "$LOG_FILE"
 # Change the directory to the repository
 cd "$REPO_PATH" || exit 1
 
+# Force English language output for git status
+LANG=en_US.UTF-8
+
 # Append the git status to the log file
 git status >> "$LOG_FILE"
 if git status | grep -q "nothing to commit, working tree clean"; then
