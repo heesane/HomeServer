@@ -27,6 +27,21 @@ services:
     restart: always
     networks:
       - home_network
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: hhs
+      POSTGRES_PASSWORD: hhs
+      POSTGRES_DB: hhs
+      TZ: Asia/Seoul
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - home_network
   pgadmin:
     image: "dpage/pgadmin4:latest"
     container_name: pgadmin
