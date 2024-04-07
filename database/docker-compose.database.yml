@@ -27,9 +27,7 @@ services:
     restart: always
     networks:
       - home_network
-<<<<<<< HEAD
 
-=======
   postgres:
     image: postgres:latest
     container_name: postgres
@@ -45,7 +43,7 @@ services:
     restart: always
     networks:
       - home_network
->>>>>>> 9119391edc02c2d45f90283d5db69b993595ff5c
+
   pgadmin:
     image: "dpage/pgadmin4:latest"
     container_name: pgadmin
@@ -59,11 +57,7 @@ services:
     restart: always
     networks:
       - home_network
-<<<<<<< HEAD
 
-
-=======
->>>>>>> 9119391edc02c2d45f90283d5db69b993595ff5c
 networks:
   home_network:
     external: true
