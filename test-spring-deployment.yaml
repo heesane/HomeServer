@@ -33,8 +33,8 @@ spec:
               value: root
             - name: SPRING_PROFILES_ACTIVE
               value: dev
-          image: heesane/java-springboot3-jdk17:latest
-          name: test-spring
+          image: ghkd110/hhs-server:latest
+          name: springboot
           ports:
             - containerPort: 8000
           resources: {}
