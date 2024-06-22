@@ -1,3 +1,4 @@
+version: "3.8"
 services:
   test_spring:
     image: heesane/java-springboot3-jdk17:latest
@@ -10,9 +11,3 @@ services:
       SPRING_DATASOURCE_PASSWORD: 1234
       SPRING_PROFILES_ACTIVE: dev
     restart: always
-    networks:
-      - home_network
-
-networks:
-  home_network:
-    external: true
