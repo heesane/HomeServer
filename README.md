@@ -1,13 +1,7 @@
-# HomeServer
-This is A Server of My Home Network
+# My Home Network
 
-# Backend
-- Springboot2
+해당 레포지토리는 제가 집에서 사용하는 네트워크 구성을 정리한 문서입니다.
 
-# Frontend
-    - Next.js (version )
+## 현재 작업 목록
 
-# DevOps
-- Docker / Docker-Compose
-- Github
-- Github CI/CD
+- [ ] Docker -> K8S Migration
