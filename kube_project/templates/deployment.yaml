@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+    spec:
+      containers:
+        - name: springboot
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: 8000
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:mysql://mysql:3306/{{ .Values.mysql.auth.database }}?serverTimezone=UTC&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "{{ .Values.mysql.auth.username }}"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "{{ .Values.mysql.auth.password }}"
+        - name: redis
+          image: "{{ .Values.redis.image }}"
+          ports:
+            - containerPort: 6379
+        - name: rabbitmq
+          image: "{{ .Values.rabbitmq.image }}"
+          ports:
+            - containerPort: 5672
+            - containerPort: 15672
+        - name: mysql
+          image: "{{ .Values.mysql.image }}"
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "{{ .Values.mysql.auth.rootPassword }}"
+            - name: MYSQL_DATABASE
+              value: "{{ .Values.mysql.auth.database }}"
+            - name: MYSQL_USER
+              value: "{{ .Values.mysql.auth.username }}"
+            - name: MYSQL_PASSWORD
+              value: "{{ .Values.mysql.auth.password }}"
+          ports:
+            - containerPort: 3306
