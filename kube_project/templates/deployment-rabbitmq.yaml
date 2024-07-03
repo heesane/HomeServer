@@ -1,27 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: rabbitmq
+  name: {{ .Values.rabbitmq.name }}
   labels:
-    app: rabbitmq
+    app: {{ .Values.rabbitmq.name }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.rabbitmq.replica }}
   selector:
     matchLabels:
-      app: rabbitmq
+      app: {{ .Values.rabbitmq.name }}
   template:
     metadata:
       labels:
-        app: rabbitmq
+        app: {{ .Values.rabbitmq.name }}
     spec:
       containers:
-      - name: rabbitmq
-        image: rabbitmq:3-management
+      - name: {{ .Values.rabbitmq.name }}
+        image: {{ .Values.rabbitmq.image }}
         ports:
-        - containerPort: 5672
-        - containerPort: 15672
+        - containerPort: {{ .Values.rabbitmq.service.port }}
+        - containerPort: {{ .Values.rabbitmq.service.managementPort }}
         env:
         - name: RABBITMQ_DEFAULT_USER
-          value: "guest"
+          value: "{{ .Values.rabbitmq.config.user }}"
         - name: RABBITMQ_DEFAULT_PASS
-          value: "guest"
+          value: "{{ .Values.rabbitmq.config.password }}"
