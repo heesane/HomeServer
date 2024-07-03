@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}-springboot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+    spec:
+      initContainers:
+        - name: wait-for-mysql
+          image: busybox
+          command: ['sh', '-c', 'until nc -z mysql 3306; do echo waiting for mysql; sleep 2; done;']
+      containers:
+        - name: springboot
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: 8000
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "{{ .Values.springboot.datasource.url }}"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "{{ .Values.springboot.datasource.username }}"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "{{ .Values.springboot.datasource.password }}"
