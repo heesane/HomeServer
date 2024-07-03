@@ -1,0 +1,43 @@
+# values.yaml
+image:
+  repository: ghkd110/server
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8000
+
+redis:
+  enabled: true
+  image: redis:latest
+  service:
+    port: 6379
+
+mysql:
+  enabled: true
+  image: mysql:latest
+  service:
+    port: 3306
+  auth:
+    rootPassword: 1234
+    database: home
+    username: home
+    password: 1234
+
+rabbitmq:
+  enabled: true
+  image: rabbitmq:management
+  service:
+    port: 5672
+    managementPort: 15672
+
+ingress:
+  enabled: false
+
+
+springboot:
+  datasource:
+    url: jdbc:mysql://mysql:3306/home?serverTimezone=UTC&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true
+    username: "home"
+    password: "1234"
