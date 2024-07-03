@@ -12,11 +12,6 @@ spec:
       labels:
         app: {{ .Values.springboot.name }}
     spec:
-      initContainers:
-        
-        - name: wait-for-mysql
-          image: busybox
-          command: ['sh', '-c', 'until nc -z mysql 3306; do echo waiting for mysql; sleep 2; done;']
       containers:
         - name: springboot
           image: "{{ .Values.springboot.image.repository }}:{{ .Values.springboot.image.tag }}"
