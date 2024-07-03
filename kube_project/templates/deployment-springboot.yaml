@@ -28,7 +28,7 @@ spec:
       
       containers:
         - name: springboot
-          image: "{{ .Value.springboot.image.repository }}:{{ .Values.springboot.image.tag }}"
+          image: "{{ .Values.springboot.image.repository }}:{{ .Values.springboot.image.tag }}"
           ports:
             - containerPort: {{ .Values.springboot.port }}
           env:
