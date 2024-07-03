@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Chart.Name }}-rabbitmq
+  name: rabbitmq
 spec:
   selector:
-    app: {{ .Chart.Name }}-rabbitmq
+    app: rabbitmq
   ports:
     - name: rabbitmq
       port: {{ .Values.rabbitmq.service.port }}
