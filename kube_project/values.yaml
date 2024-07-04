@@ -43,7 +43,7 @@ springboot:
   image:
     repository: ghkd110/server
     tag: latest
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
   name: springboot
   port: 8000
   datasource:
