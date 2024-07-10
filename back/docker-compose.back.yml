@@ -2,7 +2,9 @@
 version: "3.7"
 services:
   springboot:
-    image: heesane/java-springboot3-jdk17:latest
+    build:
+      context: home_server
+      dockerfile: Dockerfile
     restart: always
     ports:
       - "8000:8000"
