@@ -17,3 +17,10 @@ spec:
           image: {{ .Values.redis.image }}
           ports:
             - containerPort: {{ .Values.redis.service.port }}
+          env:
+            - name: REDIS_PASSWORD
+              value: "{{ .Values.redis.auth.password }}"
+            - name: REDIS_DATABASE
+              value: "{{ .Values.redis.auth.database }}"
+            - name: REDIS_TIMEOUT
+              value: "{{ .Values.redis.auth.timeout }}"

@@ -9,9 +9,13 @@ redis:
   replica: 1
   name: redis
   enabled: true
-  image: redis:latest
+  image: redis:6.2.6
   service:
     port: 6379
+  auth:
+    password: "1234"
+    database: "0"
+    timeout: "10000"
 
 mysql:
   name: mysql
