@@ -14,7 +14,7 @@ public class CorsConfig implements WebMvcConfigurer {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("https://api.heesang.pro", "http://localhost:3000", "https://localhost:3000")
+                        .allowedOrigins("https://api.heesang.pro","http://api.heesang.pro", "http://localhost:3000", "https://localhost:3000")
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowCredentials(true)
                         .maxAge(3600);
