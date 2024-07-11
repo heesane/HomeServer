@@ -15,6 +15,7 @@ spec:
       containers:
         - name: springboot
           image: "{{ .Values.springboot.image.repository }}:{{ .Values.springboot.image.tag }}"
+          imagePullPolicy: {{ .Values.springboot.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.springboot.port }}
           env:
