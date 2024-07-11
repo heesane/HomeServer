@@ -5,12 +5,23 @@ plugins {
 	id 'com.google.cloud.tools.jib' version '3.4.2'
 }
 
-group = 'hhs.server'
-version = '0.0.1-SNAPSHOT'
+allprojects {
 
-java {
-	sourceCompatibility = '17'
+	group = 'hhs.server'
+	version = '0.0.1-SNAPSHOT'
+
+	java {
+		sourceCompatibility = '17'
+	}
+
+
+
+	repositories {
+		mavenCentral()
+	}
+
 }
+
 
 configurations {
 	compileOnly {
@@ -18,8 +29,12 @@ configurations {
 	}
 }
 
-repositories {
-	mavenCentral()
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+subprojects {
+
 }
 
 dependencies {
@@ -58,9 +73,7 @@ dependencies {
 	//
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
-}
+
 
 jib{
 	from {
