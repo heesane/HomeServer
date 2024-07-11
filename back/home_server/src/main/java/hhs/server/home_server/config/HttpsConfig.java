@@ -20,7 +20,7 @@ public class HttpsConfig {
         connector.setScheme("http");
         connector.setSecure(false);
         connector.setPort(8000);
-//        connector.setRedirectPort(8443);
+        connector.setRedirectPort(8443);
         return connector;
     }
 }
