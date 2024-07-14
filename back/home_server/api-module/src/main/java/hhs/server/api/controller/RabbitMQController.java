@@ -1,7 +1,8 @@
-package hhs.server.home_server.controller;
+package hhs.server.api.controller;
 
-import hhs.server.home_server.dto.MessageDto;
-import hhs.server.home_server.service.RabbitMQService;
+
+import hhs.server.api.dto.MessageDto;
+import hhs.server.api.service.RabbitMQService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

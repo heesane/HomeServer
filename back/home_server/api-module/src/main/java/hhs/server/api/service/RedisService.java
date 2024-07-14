@@ -1,8 +1,10 @@
-package hhs.server.home_server.service;
+package hhs.server.api.service;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
 @Service
 public class RedisService {
     private StringRedisTemplate stringRedisTemplate;

@@ -1,12 +1,13 @@
-package hhs.server.home_server.service;
+package hhs.server.api.service;
 
-import hhs.server.home_server.dto.MessageDto;
+
+import hhs.server.api.dto.MessageDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.stereotype.Service;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor

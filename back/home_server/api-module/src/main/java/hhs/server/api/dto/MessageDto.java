@@ -1,4 +1,4 @@
-package hhs.server.home_server.dto;
+package hhs.server.api.dto;
 
 import lombok.*;
 

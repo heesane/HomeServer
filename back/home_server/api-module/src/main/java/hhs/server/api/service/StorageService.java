@@ -1,4 +1,4 @@
-package hhs.server.home_server.service;
+package hhs.server.api.service;
 
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;

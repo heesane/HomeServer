@@ -1,4 +1,4 @@
-package hhs.server.home_server.config;
+package hhs.server.api.config;
 
 import org.apache.catalina.connector.Connector;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
