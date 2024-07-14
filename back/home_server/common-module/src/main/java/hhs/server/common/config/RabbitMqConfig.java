@@ -1,8 +1,7 @@
-package hhs.server.home_server.config;
+package hhs.server.common.config;
 
-import hhs.server.home_server.properties.RabbitMQProperties;
+import hhs.server.common.properties.CustomRabbitMQProperties;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
@@ -12,13 +11,15 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @RequiredArgsConstructor
 @Configuration
 public class RabbitMqConfig {
-    private final RabbitMQProperties rabbitMqProperties;
+
+    private final CustomRabbitMQProperties customRabbitMQProperties;
 
     @Value("${rabbitmq.queue.name}")
     private String queueName;
@@ -47,10 +48,10 @@ public class RabbitMqConfig {
     @Bean
     public CachingConnectionFactory connectionFactory() {
         CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory();
-        cachingConnectionFactory.setHost(rabbitMqProperties.getHost());
-        cachingConnectionFactory.setUsername(rabbitMqProperties.getUsername());
-        cachingConnectionFactory.setPassword(rabbitMqProperties.getPassword());
-        cachingConnectionFactory.setPort(rabbitMqProperties.getPort());
+        cachingConnectionFactory.setHost(customRabbitMQProperties.getHost());
+        cachingConnectionFactory.setUsername(customRabbitMQProperties.getUsername());
+        cachingConnectionFactory.setPassword(customRabbitMQProperties.getPassword());
+        cachingConnectionFactory.setPort(customRabbitMQProperties.getPort());
         return cachingConnectionFactory;
     }
 

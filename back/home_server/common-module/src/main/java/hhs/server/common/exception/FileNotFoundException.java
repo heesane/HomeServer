@@ -1,6 +1,6 @@
-package hhs.server.home_server.exception;
+package hhs.server.common.exception;
 
-public class FileNotFoundException extends StorageException{
+public class FileNotFoundException extends StorageException {
     public FileNotFoundException(String message){
         super(message);
     }

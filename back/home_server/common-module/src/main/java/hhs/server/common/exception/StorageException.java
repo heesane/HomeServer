@@ -1,4 +1,4 @@
-package hhs.server.home_server.exception;
+package hhs.server.common.exception;
 
 public class StorageException extends RuntimeException{
     public StorageException(String message){

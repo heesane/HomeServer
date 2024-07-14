@@ -1,4 +1,4 @@
-package hhs.server.home_server.config;
+package hhs.server.common.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -15,28 +15,21 @@ import static java.time.Duration.ofMillis;
 
 @Configuration
 public class RedisConfig {
-    private final String HOSTNAME;
-    private final Integer PORT;
 
-    private final Integer DATABASE;
+    @Value("${redis.host}")
+    private String HOSTNAME;
 
-    private final String PASSWORD;
+    @Value("${redis.port}")
+    private Integer PORT;
 
-    private final Long TIMEOUT;
+    @Value("${redis.database}")
+    private Integer DATABASE;
 
-    public RedisConfig(
-            @Value("${redis.host}") String HOSTNAME,
-            @Value("${redis.port}") Integer PORT,
-            @Value("${redis.database}") Integer DATABASE,
-            @Value("${redis.password}") String PASSWORD,
-            @Value("${redis.timeout}") Long TIMEOUT
-    ){
-        this.HOSTNAME = HOSTNAME;
-        this.PORT = PORT;
-        this.DATABASE = DATABASE;
-        this.PASSWORD = PASSWORD;
-        this.TIMEOUT = TIMEOUT;
-    }
+    @Value("${redis.password}")
+    private String PASSWORD;
+
+    @Value("${redis.timeout}")
+    private Long TIMEOUT;
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory(){
