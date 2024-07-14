@@ -1,18 +1,18 @@
 services:
   springboot:
-    image: ghkd110/server:latest
-    container_name: hhs-server
+    image: ghkd110/server:test
+    restart: on-failure
     ports:
       - "8000:8000"
+    container_name: home
     environment:
-      - SPRING_PROFILES_ACTIVE=prod
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/home?serverTimezone=UTC&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true
-      - SPRING_DATASOURCE_USERNAME=home
-      - SPRING_DATASOURCE_ROOT_PASSWORD=1234
-      - SPRING_DATASOURCE_PASSWORD=1234
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/home?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 1234
+      SPRING_PROFILES_ACTIVE: prod
     networks:
-      - hhs-network
-    restart: always
+      - home_network
+
   mysql:
     image: mysql:latest
     container_name: mysql
@@ -49,3 +49,6 @@ services:
 networks:
   hhs-network:
     driver: bridge
+  home_network:
+    driver: bridge
+    external: true
