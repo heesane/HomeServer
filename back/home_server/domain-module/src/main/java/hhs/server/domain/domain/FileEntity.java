@@ -1,4 +1,4 @@
-package hhs.server.home_server.entity;
+package hhs.server.domain.domain;
 
 import jakarta.persistence.*;
 import lombok.Builder;
