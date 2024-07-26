@@ -54,7 +54,7 @@ jib{
                 'DIRECT_MSG': 'Hello!',
                 'USE_PROFILE': 'prod'
         ]
-        mainClass = 'hhs.server.batch.BatchApplication'
+        mainClass = 'hhs.server.discord.DiscordApplication'
 //        format='OCI'
         creationTime='USE_CURRENT_TIMESTAMP'
         entrypoint=[
@@ -64,7 +64,7 @@ jib{
                 '-Dconfig.healthmsg=${DIRECT_MSG}',
                 '-cp',
                 '/app/resources:/app/classes:/app/libs/*',
-                'hhs.server.batch.BatchApplication'
+                'hhs.server.discord.DiscordApplication'
         ]
     }
 }
