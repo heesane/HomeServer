@@ -8,9 +8,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-json'
 
-    // Swagger
-//    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
-
     // Actuator
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
