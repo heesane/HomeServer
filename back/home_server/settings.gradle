@@ -3,4 +3,5 @@ include 'domain-module'
 include 'api-module'
 include 'common-module'
 include 'batch-module'
+include 'discord-module'
 
