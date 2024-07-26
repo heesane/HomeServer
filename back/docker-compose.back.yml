@@ -1,14 +1,12 @@
 # Backend Docker Compose
 version: "3.7"
 services:
-  springboot:
-    build:
-      context: home_server
-      dockerfile: Dockerfile
+  api:
+    image: ghkd110/server:test
     restart: always
     ports:
       - "8000:8000"
-    container_name: home
+    container_name: api
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/home?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: root
@@ -16,26 +14,40 @@ services:
       SPRING_PROFILES_ACTIVE: dev
     networks:
       - home_network
-
-  # celery:
-  #   build:
-  #     context: celery
-  #     dockerfile: Dockerfile
-  #   restart: always
-  #   container_name: celery
-  #   command: celery -A home worker --loglevel=info
-  #   environment:
-  #     - C_FORCE_ROOT=true
-  #   networks:
-  #     - home_network
+  batch:
+    image: ghkd110/batch:test
+    restart: always
+    ports:
+      - "8001:8001"
+    container_name: batch
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/home?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 1234
+      SPRING_PROFILES_ACTIVE: dev
+    networks:
+      - home_network
+  discord:
+    image: ghkd110/discord:test
+    restart: always
+    ports:
+      - "8002:8002"
+    container_name: discord
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/home?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 1234
+      SPRING_PROFILES_ACTIVE: dev
+    networks:
+      - home_network
   
   fastapi:
     image: heesane/python-fastapi:latest
     restart: always
     ports:
-      - "8001:8001"
+      - "8010:8010"
     container_name: fastapi
-    command: uvicorn main:app --host 0.0.0.0 --port 8001 --reload
+    command: uvicorn main:app --host 0.0.0.0 --port 8010 --reload
     volumes:
       - ./fastapi:/app
     networks:
