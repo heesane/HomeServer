@@ -1,6 +1,6 @@
 package hhs.server.domain.repository;
 
-import hhs.server.domain.domain.User;
+import hhs.server.domain.persistence.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

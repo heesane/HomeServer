@@ -1,9 +1,12 @@
-package hhs.server.domain.domain;
+package hhs.server.domain.persistence;
 
 import hhs.server.domain.type.UserRole;
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.*;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Getter
 @Entity
 @Table(name="users")
@@ -29,5 +32,8 @@ public class User extends BaseEntity{
     @Column(name = "user_role")
     @Enumerated(EnumType.STRING)
     private UserRole role;
+
+    @Column(name = "user_refresh_token")
+    private String refreshToken;
 
 }

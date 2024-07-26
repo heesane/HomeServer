@@ -1,4 +1,4 @@
-package hhs.server.domain.domain;
+package hhs.server.domain.persistence;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
