@@ -43,8 +43,7 @@ pipeline {
             }
             steps {
                 script {
-                    sh "cd back"
-                    sh "docker compose -f ${DOCKER_COMPOSE_FILE} up -d"
+                    sh "cd back && docker compose -f ${DOCKER_COMPOSE_FILE} up -d"
                 }
             }
         }
