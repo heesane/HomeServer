@@ -15,6 +15,19 @@ pipeline {
             }
         }
 
+        stage('Get Commit Message') {
+            steps {
+                script {
+                    def gitCommitMessage = sh(
+                        script: "git log -1 --pretty=%B",
+                        returnStdout: true
+                    ).trim()
+                    echo "Commit Message: ${gitCommitMessage}"
+                    env.GIT_COMMIT_MESSAGE = gitCommitMessage
+                }
+            }
+        }
+
         stage('Test') {
             steps {
                 script {
@@ -50,10 +63,14 @@ pipeline {
 
     post {
         success {
-            echo 'Build and deployment successful!'
+            slackSend (
+                message: "성공: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL}). 최근 커밋: '${env.GIT_COMMIT_MESSAGE}'",
+            )
         }
         failure {
-            echo 'Build or deployment failed.'
+            slackSend (
+                message: "실패: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL}). 최근 커밋: '${env.GIT_COMMIT_MESSAGE}'",
+            )
         }
     }
 }
