@@ -6,5 +6,5 @@
 
 - [ ] ~~Docker -> K8S Migration~~
 - [ ] Discord Bot With Jenkins
-- [ ] Jenkins Web Hook
-- [ ] 
+- [x] Jenkins Web Hook
+
