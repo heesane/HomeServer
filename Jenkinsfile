@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     environment {
-        DOCKER_COMPOSE_FILE = 'docker-compose.back.yml'
+        DOCKER_COMPOSE_FILE = 'back/docker-compose.back.yml'
         SPRING_DATASOURCE_PASSWORD="${env.SPRING_DATASOURCE_PASSWORD}"
         SPRING_DATASOURCE_URL="${env.SPRING_DATASOURCE_URL}"
         SPRING_DATASOURCE_USERNAME="${env.SPRING_DATASOURCE_USERNAME}"
@@ -27,7 +27,6 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    sh "cd back"
                     sh "docker compose -f ${DOCKER_COMPOSE_FILE} build"
                 }
             }
@@ -43,7 +42,7 @@ pipeline {
             }
             steps {
                 script {
-                    sh "cd back && docker compose -f ${DOCKER_COMPOSE_FILE} up -d"
+                    sh "docker compose -f ${DOCKER_COMPOSE_FILE} up -d"
                 }
             }
         }
