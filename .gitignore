@@ -5,6 +5,7 @@ mysql/
 redis/
 pgadmin/
 grafana/
+jenkins/
 pgadmin/
 !grafana/env.grafana
 prometheus/
