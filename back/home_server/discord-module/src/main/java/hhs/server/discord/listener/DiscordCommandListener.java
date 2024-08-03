@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.slf4j.MDC;
 
 import java.util.Arrays;
 
@@ -14,6 +15,9 @@ public class DiscordCommandListener extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
+
+        MDC.put("moduleName", "DISCORD COMMAND");
+
         User user = event.getAuthor();
         TextChannel textChannel = event.getChannel().asTextChannel();
         Message message = event.getMessage();
@@ -42,7 +46,7 @@ public class DiscordCommandListener extends ListenerAdapter {
     private String sendMessage(MessageReceivedEvent event, String message) {
         User user = event.getAuthor();
 
-        String returnMessage = switch (message) {
+        return switch (message) {
             case "안녕하세요" -> user.getAsMention() + "님 안녕하세요! 좋은 하루 되세요";
             case "site" -> "https://www.heesang.pro";
             case "hi" -> "Hello " + user.getAsTag();
@@ -51,7 +55,5 @@ public class DiscordCommandListener extends ListenerAdapter {
             case "2" -> user.getName() + " / 2번 옵션";
             default -> "못 알아 듣겠어요 죄송합니다.";
         };
-
-        return returnMessage;
     }
 }

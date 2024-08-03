@@ -18,6 +18,9 @@ dependencies {
 
     // Rabbit MQ
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
+
+    // Loggers
+    implementation 'ch.qos.logback:logback-classic'
 }
 
 jar {
