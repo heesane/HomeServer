@@ -82,8 +82,8 @@ services:
     networks:
       - home_network
 
-  nginx-proxy-manager:
-    image: 'jc21/nginx-proxy-manager:latest'
+  npm:
+    image: 'jc21/nginx-proxy-manager:2.11.3'
     container_name: npm
     restart: unless-stopped
     ports:
