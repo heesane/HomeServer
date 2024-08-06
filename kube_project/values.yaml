@@ -46,7 +46,7 @@ springboot:
   replica: 1
   image:
     repository: ghkd110/server
-    tag: latest
+    tag: test
     pullPolicy: Always
   name: springboot
   port: 8000

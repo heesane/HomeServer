@@ -82,8 +82,8 @@ services:
     networks:
       - home_network
 
-  nginx-proxy-manager:
-    image: 'jc21/nginx-proxy-manager:latest'
+  npm:
+    image: 'jc21/nginx-proxy-manager:2.11.3'
     container_name: npm
     restart: unless-stopped
     ports:
@@ -101,6 +101,21 @@ services:
       - ./nginx-proxy-manager/letsencrypt:/etc/letsencrypt
     networks:
       - home_network
+  jenkins:
+    build:
+      context: .
+      dockerfile: jenkins.Dockerfile
+    restart: always
+    user: root
+    container_name: jenkins
+    ports:
+      - "8090:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock # 중요! 호스트 도커 연결
+      - ./jenkins:/var/jenkins_home
+    networks:
+      - home_network
+      
 networks:
   home_network:
     external: true
