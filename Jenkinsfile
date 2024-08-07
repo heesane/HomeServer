@@ -50,7 +50,7 @@ pipeline {
             when {
                 anyOf {
                     branch 'main'
-                    branch 'master'
+                    branch 'local'
                     branch 'server'
                 }
             }
