@@ -1,0 +1,29 @@
+version: '3.7'
+
+services:
+  filebeat:
+    build:
+      context: filebeat/
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    user: root
+    command:
+      - -e
+      - --strict.perms=false
+    volumes:
+      - ./filebeat/config/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro,Z
+      - type: bind
+        source: /var/lib/docker/containers
+        target: /var/lib/docker/containers
+        read_only: true
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
+    environment:
+      FILEBEAT_INTERNAL_PASSWORD: ${FILEBEAT_INTERNAL_PASSWORD:-}
+      BEATS_SYSTEM_PASSWORD: ${BEATS_SYSTEM_PASSWORD:-}
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
