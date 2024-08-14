@@ -59,6 +59,7 @@ function wait_for_elasticsearch {
 
 # Poll the Elasticsearch users API until it returns users.
 function wait_for_builtin_users {
+	echo "${ELASTICSEARCH_HOST:-elasticsearch}"
 	local elasticsearch_host="${ELASTICSEARCH_HOST:-elasticsearch}"
 
 	local -a args=( '-s' '-D-' '-m15' "http://${elasticsearch_host}:9200/_security/user?pretty" )
