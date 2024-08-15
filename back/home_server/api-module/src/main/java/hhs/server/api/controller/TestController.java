@@ -1,6 +1,5 @@
 package hhs.server.api.controller;
 
-import com.google.protobuf.Message;
 import hhs.server.api.service.TestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.i18n.LocaleContextHolder;
