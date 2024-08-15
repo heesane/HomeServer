@@ -1,5 +1,14 @@
+buildscript {
+    ext {
+        protobufVersion = '3.25.1'
+        protobufPluginVersion = '0.8.14'
+        grpcVersion = '1.58.1'
+    }
+}
+
 plugins {
     id 'com.google.cloud.tools.jib' version '3.4.3'
+    id 'com.google.protobuf' version '0.9.4'
 }
 
 dependencies {
@@ -19,7 +28,36 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
     implementation 'org.springframework.boot:spring-boot-starter-security:2.5.4'
+
+    // gRPC
+    implementation "com.google.protobuf:protobuf-java-util:3.25.1"
+    implementation 'com.google.protobuf:protobuf-java:3.25.1'
+    implementation 'net.devh:grpc-client-spring-boot-starter:2.15.0.RELEASE'
+    runtimeOnly "io.grpc:grpc-netty-shaded:${grpcVersion}"
+    implementation "io.grpc:grpc-protobuf:${grpcVersion}"
+    implementation "io.grpc:grpc-stub:${grpcVersion}"
+    compileOnly 'org.apache.tomcat:annotations-api:6.0.53'
 }
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:${protobufVersion}"
+    }
+    clean {
+        delete generatedFilesBaseDir
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc{}
+        }
+    }
+}
+
 jib{
     from {
         image = 'amazoncorretto:17'
