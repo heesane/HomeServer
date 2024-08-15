@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package pb.unit.user;
+option java_package="hhs.server.api.unit.user";
+option java_multiple_files=true;
+
+message User {
+  UserCredential userCredential = 1;
+  string name = 2;
+  string email = 3;
+}
+
+message UserCredential {
+  string uid = 1;
+}
