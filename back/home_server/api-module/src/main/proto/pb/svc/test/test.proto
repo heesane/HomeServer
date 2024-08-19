@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package pb.svc.test;
+
+option java_package = "hhs.server.api.helloworld";
+option java_multiple_files = true;
+
+import "pb/unit/common/msg.proto";
+
+service Test {
+  rpc Greeting(GreetingReq) returns (GreetingRes);
+}
+
+message GreetingReq {
+  string some = 1;
+}
+
+message GreetingRes {
+  unit.common.ReturnMsg result = 1;
+}
