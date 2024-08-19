@@ -245,20 +245,20 @@ export function Main() {
                         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
                             <div>
                                 <p className="text-sm text-muted-foreground">
-                                    ProjectHub is a platform dedicated to showcasing the best developer projects and
+                                    {`ProjectHub is a platform dedicated to showcasing the best developer projects and
                                     sharing valuable
                                     insights from industry experts. Our mission is to inspire and empower developers to
                                     push the
-                                    boundaries of what's possible in web development.
+                                    boundaries of what's possible in web development.`}
                                 </p>
                                 <p className="mt-4 text-sm text-muted-foreground">
-                                    We believe that by sharing knowledge and highlighting innovative projects, we can
-                                    foster a vibrant
-                                    community of developers who are passionate about creating amazing digital
-                                    experiences. Join us on this
-                                    journey as we explore the cutting edge of web development and uncover the stories
-                                    behind the projects
-                                    that are shaping the future.
+                                    {`We believe that by sharing knowledge and highlighting innovative projects, we can
+                                        foster a vibrant
+                                        community of developers who are passionate about creating amazing digital
+                                        experiences. Join us on this
+                                        journey as we explore the cutting edge of web development and uncover the stories
+                                        behind the projects
+                                        that are shaping the future.`}
                                 </p>
                             </div>
                             <div>
