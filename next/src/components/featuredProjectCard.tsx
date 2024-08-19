@@ -2,13 +2,14 @@ import {Card, CardContent, CardFooter, CardHeader} from "@/components/ui/card";
 import StarIcon from "@/components/ui/icon/starIcon";
 import {Separator} from "@/components/ui/separator";
 import {EyeIcon} from "lucide-react";
+import Image from "next/image";
 
 export default function FeaturedProjectCard(){
     return (
         <Card>
             <CardHeader>
                 <div className="flex items-center gap-4">
-                    <img
+                    <Image
                         src="/placeholder.svg"
                         width={48}
                         height={48}
