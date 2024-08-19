@@ -58,7 +58,9 @@ export function Main() {
                 <section className="py-12 sm:py-20">
                     <div className="container px-4 sm:px-6 lg:px-8">
                         <div className="mb-8 flex items-center justify-between">
-                            <h2 className="text-2xl font-bold sm:text-3xl">Featured Projects</h2>
+                            <h2 className="text-2xl font-bold sm:text-3xl">
+                                Featured Projects
+                            </h2>
                             <Link href="#" className="text-sm font-medium text-primary hover:underline"
                                   prefetch={false}>
                                 View All

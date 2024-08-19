@@ -12,6 +12,10 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
     title: "ProjectHub",
     description: "ProjectHub is a platform for developers to share insight and discover new projects.",
+    icons: {
+        icon: "/logo.webp",
+    },
+    authors: [{name:"Heesang Hwang",url:"https://www.heesang.pro"}]
 };
 
 export default function RootLayout({
@@ -21,14 +25,17 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="kr">
-        <body className={inter.className}>
+        <body className={`${inter.className} flex flex-col min-h-screen`}>
         <Header />
         <ThemeProvider>
-            <ThemeToggleButton/>
+            <ThemeToggleButton />
         </ThemeProvider>
-        <main>{children}</main>
+        <main className="flex-1">
+            {children}
+        </main>
         <Footer />
         </body>
         </html>
     );
 }
+
