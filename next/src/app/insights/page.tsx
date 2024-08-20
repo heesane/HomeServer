@@ -25,10 +25,10 @@ export default function Insights() {
                                     <Input
                                         type="search"
                                         placeholder="Search projects..."
-                                        className="w-full rounded-md bg-white/10 px-4 py-2 text-white placeholder:text-white/60 focus:outline-none"
+                                        className="w-fit rounded-md bg-white/10 px-4 py-2 text-white placeholder:text-white/60 focus:outline-none"
                                     />
                                     <Button className="flex-shrink-0"> {/* flex-shrink-0를 사용해 버튼이 줄어들지 않게 */}
-                                        {`Explore Projects`}
+                                        {`Explore Insights`}
                                     </Button>
                                 </div>
 
