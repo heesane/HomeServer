@@ -1,6 +1,4 @@
-import FeaturedProjectCard from "@/components/featuredProjectCard";
 import {insightsTemp} from "@/data/dataTemp";
-import Link from "next/link";
 import InsightsCard from "@/components/insightsCard";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
