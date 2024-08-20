@@ -18,13 +18,13 @@ export default function Explore() {
                                 <h3 className="text-lg font-medium text-primary hover:underline">
                                     Search
                                 </h3>
-                                <div className="flex">
+                                <div className="flex-1 flex items-center space-x-2 ml-4"> {/* Input과 버튼을 감싸는 div */}
                                     <Input
-                                        type="search"
-                                        placeholder="Search projects..."
-                                        className="w-full rounded-md bg-white/10 px-4 py-2 text-white placeholder:text-white/60 focus:outline-none sm:w-auto"
+                                      type="search"
+                                      placeholder="Search projects..."
+                                      className="w-fit rounded-md bg-white/10 px-4 py-2 text-white placeholder:text-white/60 focus:outline-none"
                                     />
-                                    <Button className="w-full sm:w-auto">
+                                    <Button className="flex-shrink-0"> {/* flex-shrink-0를 사용해 버튼이 줄어들지 않게 */}
                                         {`Explore Projects`}
                                     </Button>
                                 </div>
@@ -34,8 +34,8 @@ export default function Explore() {
                                     <label htmlFor="sort" className="mr-2 text-sm text-muted-foreground">Sort
                                         by:</label>
                                     <select
-                                        id="sort"
-                                        className="bg-background border border-muted-foreground text-sm rounded-md py-1 px-2 focus:outline-none"
+                                      id="sort"
+                                      className="bg-background border border-muted-foreground text-sm rounded-md py-1 px-2 focus:outline-none"
                                     >
                                         <option value="default">Default</option>
                                         <option value="latest">Latest</option>
@@ -49,10 +49,10 @@ export default function Explore() {
                                 {/*/반복문으로 Card 동적 생성/*/}
                                 {
                                     projectsTemp.map((project, index) => (
-                                        <FeaturedProjectCard
-                                            key={index}
-                                            project={project}>
-                                        </FeaturedProjectCard>
+                                      <FeaturedProjectCard
+                                        key={index}
+                                        project={project}>
+                                      </FeaturedProjectCard>
                                     ))
                                 }
                             </div>
