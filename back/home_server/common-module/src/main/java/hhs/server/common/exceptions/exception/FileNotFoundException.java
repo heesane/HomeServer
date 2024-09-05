@@ -1,4 +1,4 @@
-package hhs.server.common.exception;
+package hhs.server.common.exceptions.exception;
 
 public class FileNotFoundException extends StorageException {
     public FileNotFoundException(String message){
