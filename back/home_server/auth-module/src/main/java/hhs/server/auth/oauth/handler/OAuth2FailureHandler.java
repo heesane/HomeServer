@@ -14,7 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Component
 public class OAuth2FailureHandler implements AuthenticationFailureHandler {
   @Override
-  public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+  public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
     // 인증 실패 시 아래 주소로 리다이렉트
     // 실패 이유를 URL 파라미터로 전달할 수 있음
     String targetUrl = UriComponentsBuilder.fromUriString("http://localhost:8080/api/auth/login/error")
