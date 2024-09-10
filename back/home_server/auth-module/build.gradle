@@ -4,7 +4,6 @@ plugins {
 
 dependencies {
 
-    implementation project(':api-module')
     implementation project(':common-module')
     implementation project(':domain-module')
 

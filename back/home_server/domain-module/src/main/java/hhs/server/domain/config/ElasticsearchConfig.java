@@ -10,7 +10,7 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 @EnableElasticsearchRepositories(basePackages = "hhs.server.domain.repository.document")
 public class ElasticsearchConfig extends ElasticsearchConfiguration {
 
-  @Value("${spring.elasticsearch.uris[1]}")
+  @Value("${spring.elasticsearch.uris}")
   private String uri;
 
   @Override

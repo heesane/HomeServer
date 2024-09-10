@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Slf4j
 @ComponentScan(basePackages = "hhs.server")
 @EntityScan(basePackages = "hhs.server.domain")
-@EnableJpaRepositories(basePackages = "hhs.server.domain.repository")
+@EnableJpaRepositories(basePackages = "hhs.server.domain.repository.jpa")
 @SpringBootApplication
 public class ApiApplication {
     public static void main(String[] args) {
