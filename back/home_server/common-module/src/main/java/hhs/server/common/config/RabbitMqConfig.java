@@ -19,51 +19,51 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMqConfig {
 
-    private final CustomRabbitMQProperties customRabbitMQProperties;
+  private final CustomRabbitMQProperties customRabbitMQProperties;
 
-    @Value("${rabbitmq.queue.name}")
-    private String queueName;
+  @Value("${rabbitmq.queue.name}")
+  private String queueName;
 
-    @Value("${rabbitmq.exchange.name}")
-    private String exchangeName;
+  @Value("${rabbitmq.exchange.name}")
+  private String exchangeName;
 
-    @Value("${rabbitmq.routing.key}")
-    private String routingKey;
+  @Value("${rabbitmq.routing.key}")
+  private String routingKey;
 
-    @Bean
-    public Queue queue(){
-        return new Queue(queueName,false);
-    }
+  @Bean
+  public Queue queue() {
+    return new Queue(queueName, false);
+  }
 
-    @Bean
-    public DirectExchange directExchange(){
-        return new DirectExchange(exchangeName);
-    }
+  @Bean
+  public DirectExchange directExchange() {
+    return new DirectExchange(exchangeName);
+  }
 
-    @Bean
-    public Binding binding(Queue queue, DirectExchange exchange){
-        return BindingBuilder.bind(queue).to(exchange).with(routingKey);
-    }
+  @Bean
+  public Binding binding(Queue queue, DirectExchange exchange) {
+    return BindingBuilder.bind(queue).to(exchange).with(routingKey);
+  }
 
-    @Bean
-    public CachingConnectionFactory connectionFactory() {
-        CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory();
-        cachingConnectionFactory.setHost(customRabbitMQProperties.getHost());
-        cachingConnectionFactory.setUsername(customRabbitMQProperties.getUsername());
-        cachingConnectionFactory.setPassword(customRabbitMQProperties.getPassword());
-        cachingConnectionFactory.setPort(customRabbitMQProperties.getPort());
-        return cachingConnectionFactory;
-    }
+  @Bean
+  public CachingConnectionFactory connectionFactory() {
+    CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory();
+    cachingConnectionFactory.setHost(customRabbitMQProperties.getHost());
+    cachingConnectionFactory.setUsername(customRabbitMQProperties.getUsername());
+    cachingConnectionFactory.setPassword(customRabbitMQProperties.getPassword());
+    cachingConnectionFactory.setPort(customRabbitMQProperties.getPort());
+    return cachingConnectionFactory;
+  }
 
-    @Bean
-    public MessageConverter jackson2JsonMessageConverter(){
-        return new Jackson2JsonMessageConverter();
-    }
+  @Bean
+  public MessageConverter jackson2JsonMessageConverter() {
+    return new Jackson2JsonMessageConverter();
+  }
 
-    @Bean
-    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory){
-        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setMessageConverter(jackson2JsonMessageConverter());
-        return rabbitTemplate;
-    }
+  @Bean
+  public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
+    RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+    rabbitTemplate.setMessageConverter(jackson2JsonMessageConverter());
+    return rabbitTemplate;
+  }
 }

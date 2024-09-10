@@ -29,6 +29,9 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-security:2.5.4'
 
+    // Elastic Search
+    implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
+
     // gRPC
     implementation "com.google.protobuf:protobuf-java-util:3.25.1"
     implementation 'com.google.protobuf:protobuf-java:3.25.1'

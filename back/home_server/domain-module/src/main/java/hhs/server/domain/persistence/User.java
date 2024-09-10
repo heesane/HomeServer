@@ -1,39 +1,71 @@
 package hhs.server.domain.persistence;
 
-import hhs.server.domain.type.UserRole;
-import jakarta.persistence.*;
-import lombok.*;
+import hhs.server.domain.model.type.UserRole;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
+
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Getter
 @Entity
-@Table(name="users")
-public class User extends BaseEntity{
+@SQLRestriction("deleted_at IS NULL")
+@SQLDelete(sql = "UPDATE member SET deleted_at = now() WHERE id = ?")
+@Table(name = "member")
+public class User extends BaseTimeEntity{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(name = "user_name")
-    private String name;
+  @Column(name = "email", unique = true, nullable = false)
+  private String email;
 
-    @Column(name = "user_password")
-    private String password;
+  @Column(name = "password", nullable = true)
+  private String password;
 
-    @Column(name = "user_email")
-    private String email;
+  @Column(name = "nickname", nullable = true)
+  private String nickname;
 
-    @Column(name = "user_email_verification")
-    private boolean emailVerification;
+  @Enumerated(EnumType.STRING)
+  private UserRole role;
 
-    @Column(name = "user_role")
-    @Enumerated(EnumType.STRING)
-    private UserRole role;
+  @Column(name = "provider", nullable = true)
+  private String provider;
 
-    @Column(name = "user_refresh_token")
-    private String refreshToken;
+  @Column(name = "provider_id", nullable = true)
+  private String providerId;
 
+  @Column(name = "refresh_token", nullable = true)
+  private String refreshToken;
+
+  // 유저가 등록한 프로젝트의 리스트
+  @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+  private List<Projects> projects;
+
+  @OneToOne
+  @JoinColumn(name="badge_id")
+  private Badge badge;
+
+  public void updateBadge(Badge badge){
+    this.badge = badge;
+  }
 }
