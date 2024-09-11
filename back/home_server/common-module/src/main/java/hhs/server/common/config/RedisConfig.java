@@ -1,78 +1,92 @@
 package hhs.server.common.config;
 
+import static java.time.Duration.ofMillis;
+
+import java.time.Duration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
+import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-
-import static java.time.Duration.ofMillis;
 
 @Configuration
 public class RedisConfig {
 
-    @Value("${redis.host}")
-    private String HOSTNAME;
+  @Value("${spring.data.redis.host}")
+  private String host;
 
-    @Value("${redis.port}")
-    private Integer PORT;
+  @Value("${spring.data.redis.port}")
+  private Integer port;
 
-    @Value("${redis.database}")
-    private Integer DATABASE;
+  @Value("${spring.data.redis.timeout}")
+  private Long timeout;
 
-    @Value("${redis.password}")
-    private String PASSWORD;
+  @Bean
+  public RedisConnectionFactory redisConnectionFactory() {
+    RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
+    config.setHostName(host);
+    config.setPort(port);
 
-    @Value("${redis.timeout}")
-    private Long TIMEOUT;
+    LettuceClientConfiguration clientConfig = LettuceClientConfiguration.builder()
+        .commandTimeout(ofMillis(timeout))
+        .build();
 
-    @Bean
-    public RedisConnectionFactory redisConnectionFactory(){
-        RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
-        config.setHostName(HOSTNAME);
-        config.setPort(PORT);
-        config.setDatabase(DATABASE);
-        config.setPassword(PASSWORD);
+    return new LettuceConnectionFactory(config, clientConfig);
+  }
 
-        LettuceClientConfiguration clientConfig = LettuceClientConfiguration.builder()
-                .commandTimeout(ofMillis(TIMEOUT))
-                .build();
+  // 분산락을 사용하기 위한 RedisTemplate
+  @Bean
+  public RedisTemplate<String, Object> redisTemplate() {
+    // 사람의 수를 확인하기위한
+    RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
 
-        return new LettuceConnectionFactory(config, clientConfig);
-    }
+    redisTemplate.setConnectionFactory(redisConnectionFactory());
 
-    @Bean
-    public RedisTemplate<?, ?> redisTemplate() {
-        RedisTemplate<byte[], byte[]> redisTemplate = new RedisTemplate<>();
-        redisTemplate.setConnectionFactory(redisConnectionFactory());
+    // Key : Value 형식으로 사용할 경우 시리얼라이저
+    redisTemplate.setKeySerializer(new StringRedisSerializer());
+//    redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+    redisTemplate.setValueSerializer(new StringRedisSerializer());
+    // Hash를 사용할 경우 시리얼라이저
+    redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+    redisTemplate.setHashValueSerializer(new StringRedisSerializer());
 
-        // Key : Value 형식으로 사용할 경우 시리얼라이저
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(new StringRedisSerializer());
+    // 모든 경우
+    redisTemplate.setDefaultSerializer(new GenericJackson2JsonRedisSerializer());
 
-        // Hash를 사용할 경우 시리얼라이저
-        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-        redisTemplate.setHashValueSerializer(new StringRedisSerializer());
+    return redisTemplate;
+  }
 
-        // 모든 경우
-        redisTemplate.setDefaultSerializer(new StringRedisSerializer());
+  @Bean
+  public RedisCacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
+    return RedisCacheManager.builder(redisConnectionFactory)
+        // TTL 60초
+        .cacheDefaults(redisCacheConfiguration(60))
+        .withCacheConfiguration("projectSortedByLatest", redisCacheConfiguration(600))
+        .withCacheConfiguration("projectSortedByComments", redisCacheConfiguration(600))
+        .withCacheConfiguration("projectSortedByLikes", redisCacheConfiguration(600))
+        .build();
+  }
 
-        return redisTemplate;
-    }
+  private RedisCacheConfiguration redisCacheConfiguration(int seconds) {
+    return RedisCacheConfiguration
+        .defaultCacheConfig()
+        .serializeKeysWith(
+            RedisSerializationContext.SerializationPair.fromSerializer(
+                new StringRedisSerializer())
+        )
+        .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(
+            new GenericJackson2JsonRedisSerializer())
+        )
+        .entryTtl(Duration.ofSeconds(seconds));
+  }
 
-    @Bean
-    public StringRedisTemplate stringRedisTemplate() {
-        StringRedisTemplate stringRedisTemplate = new StringRedisTemplate();
-        stringRedisTemplate.setConnectionFactory(redisConnectionFactory());
 
-        // Key : Value 형식으로 사용할 경우 시리얼라이저
-        stringRedisTemplate.setKeySerializer(new StringRedisSerializer());
-        stringRedisTemplate.setValueSerializer(new StringRedisSerializer());
-        return stringRedisTemplate;
-    }
 }
