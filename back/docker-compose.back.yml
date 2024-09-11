@@ -16,6 +16,11 @@ services:
       - spring-log:/logs
     networks:
       - home_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api.rule=Host(`api.heesang.pro`)"
+      - "traefik.http.routers.api.entrypoints=web"
+      - "traefik.http.services.api.loadbalancer.server.port=8000"
   batch:
     image: ghkd110/batch:test
     restart: always
