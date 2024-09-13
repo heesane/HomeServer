@@ -17,13 +17,14 @@ services:
       ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-}
       discovery.type: single-node
     networks:
+      - home_network
       - elk
     restart: unless-stopped
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.elasticsearch.rule=Host(`es.heesang.pro`)"
-      - "traefik.http.routers.elasticsearch.entrypoints=web"
-      - "traefik.http.services.elasticsearch.loadbalancer.server.port=9200"
+    # labels:
+    #   - "traefik.enable=true"
+    #   - "traefik.http.routers.elasticsearch.rule=Host(`es.heesang.pro`)"
+    #   - "traefik.http.routers.elasticsearch.entrypoints=web"
+    #   - "traefik.http.services.elasticsearch.loadbalancer.server.port=9200"
 
   logstash:
     image: docker.elastic.co/logstash/logstash:8.7.1
@@ -55,14 +56,15 @@ services:
     environment:
       KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD:-}
     networks:
+      - home_network
       - elk
     depends_on:
       - elasticsearch
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.kibana.rule=Host(`kibana.heesang.pro`)"
-      - "traefik.http.routers.kibana.entrypoints=web"
-      - "traefik.http.services.kibana.loadbalancer.server.port=5601"
+    # labels:
+    #   - "traefik.enable=true"
+    #   - "traefik.http.routers.kibana.rule=Host(`kibana.heesang.pro`)"
+    #   - "traefik.http.routers.kibana.entrypoints=web"
+    #   - "traefik.http.services.kibana.loadbalancer.server.port=5601"
     restart: unless-stopped
 
   filebeat:
@@ -92,6 +94,8 @@ services:
       - elasticsearch
 
 networks:
+  home_network:
+    external: true
   elk:
     driver: bridge
 
