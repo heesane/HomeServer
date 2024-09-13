@@ -25,3 +25,4 @@ __pycache__/
 .DS_Store
 server.log
 back/home_server/gradle.properties
+acme.json

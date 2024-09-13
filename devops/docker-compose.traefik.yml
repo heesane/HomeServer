@@ -1,0 +1,56 @@
+volumes:
+  portainer:
+    driver: local
+  traefik-certificates:
+  portainer_data:
+  grafana_data:
+  traefik_logs:
+
+networks:
+  home_network:
+    external: true
+
+
+services:
+  traefik:
+    image: traefik:v3.0
+    container_name: traefik
+    restart: unless-stopped
+    security_opt:
+    - no-new-privileges:true
+    networks:
+    - home_network
+    ports:
+    - "80:80"
+    - "443:443"
+    - "8100:8080"
+    environment:
+      CF_EMAIL: ${CF_EMAIL}
+      CF_DNS_API_TOKEN: ${CF_API_TOKEN}
+      TRAEFIK_DASHBOARD_CREDENTIALS: ${TRAEFIK_DASHBOARD_CREDENTIALS}
+    env_file: .env
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./traefik_volumes/traefik.yml:/traefik.yml:ro"
+      - "./traefik_volumes/acme.json:/acme.json"
+      - "traefik-certificates:/letsencrypt"
+      - "traefik_logs:/traefik/logs/"
+    labels:
+      - "traefik. enable=true"
+      - "traefik.http.routers.traefik.entrypoints=http"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.heesang.pro`)"
+
+      - "traefik.http.middlewares.traefik-auth.basicauth.users=${TRAEFIK_DASHBOARD_CREDENTIALS}"
+      - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto=https"
+
+      - "traefik.http.routers.traefik.middlewares=traefik-https-redirect"
+      - "traefik.http.routers.traefik-secure.entrypoints=https"
+      - "traefik.http.routers.traefik-secure.rule=Host(`traefik.heesang.pro`)"
+      - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
+      - "traefik.http.routers.traefik-secure.tls=true"
+      - "traefik.http.routers.traefik-secure.tls.certresolver=cloudflare"
+      - "traefik.http.routers.traefik-secure.tls.domains[01.main=heesang.pro"
+      - "traefik.http.routers.traefik-secure.tls.domains[0].sans=*.heesang.pro"
+      - "traefik.http.routers.traefik-secure.service=api@internal"
