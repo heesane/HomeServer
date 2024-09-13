@@ -1,7 +1,4 @@
-version: '3.7'
-
 services:
-
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.7.1
     container_name: elasticsearch
@@ -93,6 +90,31 @@ services:
     depends_on:
       - elasticsearch
 
+  loki:
+    container_name: loki
+    image: grafana/loki:latest
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - home_network
+
+  promtail:
+    container_name: promtail
+    image:  grafana/promtail:latest
+    volumes:
+      - ./promtail:/etc/promtail/
+      - /var/log:/var/log:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - devops_traefik_logs:/traefik/logs/
+      - devops_npm_logs:/nginx/logs/
+    command:
+      - -config.file=/etc/promtail/config.yaml
+      - -config.expand-env=true
+    depends_on:
+      - loki
+    networks:
+      - home_network
+
 networks:
   home_network:
     external: true
@@ -101,6 +123,10 @@ networks:
 
 volumes:
   elasticsearch:
+  devops_traefik_logs:
+    external: true
+  devops_npm_logs:
+    external: true
   back_spring-log:
     external: true
 
