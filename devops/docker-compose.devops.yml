@@ -88,19 +88,13 @@ services:
   #     - home_network
   
   npm:
-    image: 'jc21/nginx-proxy-manager:2.11.3'
+    image: 'docker.io/jc21/nginx-proxy-manager:latest'
     container_name: npm
     restart: unless-stopped
     ports:
       - '80:80'
       - '81:81'
       - '443:443'
-    environment:
-      - DB_MYSQL_HOST = mysql
-      - DB_MYSQL_PORT =  3306
-      - DB_MYSQL_USER = home
-      - DB_MYSQL_PASSWORD = 1234
-      - DB_MYSQL_NAME = home
     volumes:
       - ./nginx-proxy-manager/data:/data
       - ./nginx-proxy-manager/letsencrypt:/etc/letsencrypt
