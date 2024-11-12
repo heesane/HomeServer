@@ -1,0 +1,20 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    ports:
+      web:
+        port: 80
+        exposedPort: 80
+      websecure:
+        port: 443
+        exposedPort: 443
+      custom-8000:
+        port: 8000
+        exposedPort: 8000
+        protocol: TCP
+    additionalArguments:
+      - "--entryPoints.custom-8000.address=:8000"
