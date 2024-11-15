@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: traefik
+  namespace: traefik
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: traefik
+  template:
+    metadata:
+      labels:
+        app: traefik
+    spec:
+      containers:
+      - name: traefik
+        image: traefik:v2.9
+        args:
+        - "--api.insecure=true"
+        - "--entrypoints.web.address=:80"
+        - "--entrypoints.websecure.address=:443"
+        - "--providers.kubernetescrd"
+        - "--providers.kubernetesingress"
+        - "--providers.file.filename=/home/heesang/server/microk8s/config/dynam\
+          ic.yml"
+        - "--certificatesresolvers.cloudflare.acme.dnschallenge=true"
+        - "--certificatesresolvers.cloudflare.acme.dnschallenge.provider=cloudf\
+          lare"
+        - "--certificatesresolvers.cloudflare.acme.email=tees3359@gmail.com"
+        - "--certificatesresolvers.cloudflare.acme.storage=/acme.json"
+        env:
+        - name: CLOUDFLARE_EMAIL
+          value: "tees3359@gmail.com"
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - name: web
+          containerPort: 80
+        - name: websecure
+          containerPort: 443

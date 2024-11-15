@@ -20,87 +20,15 @@ networks:
     external: true
 
 services:
-  # traefik:
-  #   container_name: traefik
-  #   image: traefik:latest
-  #   command:
-  #     - "--api.insecure=false"
-  #     - "--providers.docker=true"
-  #     - "--providers.docker.exposedbydefault=false"
-  #     - "--entryPoints.web.address=:80"
-  #     - "--entrypoints.websecure.address=:443"
-  #     - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
-  #     - "--entryPoints.web.http.redirections.entrypoint.scheme=https"
-  #     # - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"
-  #     - "--certificatesresolvers.myresolver.acme.dnschallenge=true"
-  #     - "--certificatesresolvers.myresolver.acme.dnschallenge.provider=cloudflare"
-  #     - "--certificatesresolvers.myresolver.acme.email=${CF_EMAIL}"
-  #     - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
-  #     - "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
-  #     # - "--certificatesresolvers.myresolver.acme.caserver=https://acme-v02.api.letsencrypt.org/directory"
-  #     - "--entrypoints.websecure.http.tls=true"
-  #     - "--entrypoints.websecure.http.tls.certresolver=myresolver"
-  #     - --entrypoints.websecure.http.tls.domains[0].main=heesang.pro
-  #     - --entrypoints.websecure.http.tls.domains[0].sans=*.heesang.pro
-  #     - "--log.level=INFO"
-  #     - "--accesslog=true"
-  #     - "--accesslog.filepath=/traefik/logs/access.log"
-  #     - "--accesslog.bufferingsize=100"
-  #     - "--accesslog.format=json"
-  #     - "--accesslog.fields.defaultmode=keep"
-  #     - "--accesslog.fields.headers.defaultmode=keep"
-  #     - "--accesslog.fields.headers.names.X-Forwarded-For=keep"
-  #     - "--api.dashboard=true"
-  #     - "--metrics.prometheus=true"
-  #     - "--metrics.prometheus.buckets=0.100000, 0.300000, 1.200000, 5.000000"
-  #     - "--metrics.prometheus.addEntryPointsLabels=true"
-  #     - "--metrics.prometheus.addServicesLabels=true"
-  #     - "--entryPoints.metrics.address=:8091"
-  #     - "--metrics.prometheus.entryPoint=metrics"
-  #   ports:
-  #     - target: 80
-  #       published: 80
-  #       protocol: tcp
-  #       mode: host
-  #     - target: 443
-  #       published: 443
-  #       protocol: tcp
-  #       mode: host
-  #     - target: 8080
-  #       published: 8100
-  #       protocol: tcp
-  #       mode: host
-  #   environment:
-  #     - CF_API_EMAIL=${CF_EMAIL}
-  #     - CF_DNS_API_TOKEN=${CF_API_TOKEN}
-  #   volumes:
-  #     - "/var/run/docker.sock:/var/run/docker.sock"
-  #     - "traefik-certificates:/letsencrypt"
-  #     - "traefik_logs:/traefik/logs/"
-  #   labels:
-  #     - "traefik.enable=true"
-  #     - "traefik.http.routers.api.rule=Host(`traefik.heesang.pro`)"
-  #     - "traefik.http.routers.api.service=api@internal"
-  #     - "traefik.http.routers.api.entrypoints=websecure"
-  #     - "traefik.http.routers.api.tls.certresolver=myresolver"
-  #     - "traefik.http.services.api.loadbalancer.server.port=8100"
-  #   networks:
-  #     - home_network
-  
+
   npm:
-    image: 'jc21/nginx-proxy-manager:2.11.3'
+    image: 'docker.io/jc21/nginx-proxy-manager:latest'
     container_name: npm
     restart: unless-stopped
     ports:
       - '80:80'
       - '81:81'
       - '443:443'
-    environment:
-      - DB_MYSQL_HOST = mysql
-      - DB_MYSQL_PORT =  3306
-      - DB_MYSQL_USER = home
-      - DB_MYSQL_PASSWORD = 1234
-      - DB_MYSQL_NAME = home
     volumes:
       - ./nginx-proxy-manager/data:/data
       - ./nginx-proxy-manager/letsencrypt:/etc/letsencrypt

@@ -9,29 +9,23 @@ networks:
 
 services:
   traefik:
-    image: traefik:v2.9
+    image: traefik:v3.2
     container_name: traefik
     restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
     networks:
     - home_network
     ports:
-    - target: 443
-      published: 443
-      protocol: tcp
-      mode: host
-    - target: 80
-      published: 80
-      protocol: tcp
-      mode: host
-    - target: 8090
-      published: 8090
-      protocol: tcp
-      mode: host
+      - "80:80"
+      - "443:443"
+      - "8090:8090"
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - "/var/run/docker.sock:/var/run/docker.sock"
-      - "./acme.json:/letsencrypt/acme.json"
-      - "traefik_logs:/traefik/logs/"
+      - /var/run/docker.sock:/var/run/docker.sock
+      - traefik-certificates:/letsencrypt
+      - traefik_logs:/traefik/logs/
+      # - ./traefik.yml:/etc/traefik/traefik.yml
     command:
       - "--api.insecure=false"
       - "--providers.docker=true"
@@ -44,7 +38,7 @@ services:
       - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"
       - "--certificatesresolvers.letsencrypt.acme.email=tees3359@gmail.com"
       - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
-      - "--log.level=INFO"
+      - "--log.level=DEBUG"
       - "--accesslog=true"
       - "--accesslog.filepath=/traefik/logs/access.log"
       - "--accesslog.bufferingsize=100"
@@ -61,10 +55,10 @@ services:
       - "--metrics.prometheus.entryPoint=metrics"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.traefik.rule=Host(`dashboard.coded-by.me`)"
-      - "traefik.http.routers.traefik.entrypoints=websecure"
-      - "traefik.http.routers.traefik.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.traefik.service=api@internal"
-      - "traefik.http.services.traefik.loadbalancer.server.port=8080"
-      - "traefik.http.routers.traefik.middlewares=traefik-auth"
+      - "traefik.http.routers.dashboard.rule=Host(`dashboard.coded-by.me`)"
+      - "traefik.http.routers.dashboard.entrypoints=websecure"
+      - "traefik.http.routers.dashboard.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.dashboard.service=api@internal"
+      - "traefik.http.services.dashboard.loadbalancer.server.port=8090"
+      - "traefik.http.routers.dashboard.middlewares=traefik-auth"
       - "traefik.http.middlewares.traefik-auth.basicauth.users=admin:$$apr1$$QWg5ZzJq$$7Z6Q6" # admin:admin
