@@ -9,13 +9,22 @@ export const ThemeToggleButton = () => {
     const { theme, toggleTheme } = useTheme();
 
     return (
-        <div className="fixed bottom-4 right-4"> {/* 위치를 고정하기 위해 fixed 클래스와 위치 조정을 추가 */}
-            <button
-                onClick={toggleTheme}
-                className="p-2 rounded-md bg-gray-200 dark:bg-gray-800"
-            >
-                {theme === "light" ? <SunIcon className="h-5 w-5" /> : <MoonIcon className="h-5 w-5" />}
-            </button>
-        </div>
+      <div className="fixed right-4 bottom-6 text-sm"> {/* fixed 위치를 조정 */}
+        <button
+          onClick={toggleTheme}
+          className="flex items-center gap-2 px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-800 text-black dark:text-white shadow-lg transition-colors duration-200"
+        >
+          {/* 텍스트 */}
+          {theme === "light" ? "Switch to Dark Mode" : "Switch to Light Mode"}
+
+          {/* 아이콘 */}
+          {theme === "light" ? (
+            <SunIcon className="h-5 w-5"/>
+          ) : (
+            <MoonIcon className="h-5 w-5"/>
+          )}
+        </button>
+      </div>
+
     );
 };
