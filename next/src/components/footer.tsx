@@ -1,5 +1,8 @@
 import Link from "next/link";
 import { MountainIcon } from "lucide-react";
+import {ThemeToggleButton} from "@/components/themeToggleButton";
+import {ThemeProvider} from "@/components/themeContext";
+import React from "react";
 
 export function Footer() {
     return (
@@ -11,22 +14,25 @@ export function Footer() {
                 </div>
                 <nav className="flex flex-wrap items-center gap-4 text-sm">
                     <Link href="/explore" className="hover:text-primary" prefetch={false}>
-                        Explore
+                        {`Explore`}
                     </Link>
                     <Link href="/insights" className="hover:text-primary" prefetch={false}>
-                        Insights
+                        {`Insights`}
                     </Link>
                     <Link href="/about" className="hover:text-primary" prefetch={false}>
-                        About
+                        {`About`}
                     </Link>
                     <Link href="/contact" className="hover:text-primary" prefetch={false}>
-                        Contact
+                        {`Contact`}
                     </Link>
                     <Link href="/domain" className="hover:text-primary" prefetch={false}>
-                        Domain
+                        {`Domain`}
                     </Link>
                 </nav>
                 <p className="text-sm text-muted-foreground">&copy; 2024 ProjectHub. All rights reserved.</p>
+                <ThemeProvider>
+                    <ThemeToggleButton />
+                </ThemeProvider>
             </div>
         </footer>
     );
