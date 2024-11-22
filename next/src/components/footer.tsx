@@ -22,6 +22,9 @@ export function Footer() {
                     <Link href="/contact" className="hover:text-primary" prefetch={false}>
                         Contact
                     </Link>
+                    <Link href="/domain" className="hover:text-primary" prefetch={false}>
+                        Domain
+                    </Link>
                 </nav>
                 <p className="text-sm text-muted-foreground">&copy; 2024 ProjectHub. All rights reserved.</p>
             </div>
