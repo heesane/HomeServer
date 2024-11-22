@@ -12,7 +12,7 @@ export function Main({apiData}: { apiData: jsonPlaceHolder[] }) {
       <main className="flex-1">
         {/*메인 로고 부분*/}
         <section className="bg-gradient-to-r from-[#5f6caf] to-[#49a09d] py-20 sm:py-32">
-          <div className="container flex flex-col items-center gap-8 px-4 sm:px-6 lg:px-8">
+          <div className="container mx-auto flex flex-col items-center gap-8 px-4 sm:px-6 lg:px-8">
 
             <h1 className="text-center text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
               {`Discover the Best Developer Projects`}
@@ -40,7 +40,7 @@ export function Main({apiData}: { apiData: jsonPlaceHolder[] }) {
 
         {/*Featured Projects Sections*/}
         <section className="py-12 sm:py-20">
-          <div className="container px-4 sm:px-6 lg:px-8">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-8 flex items-center justify-between">
               <h2 className="text-2xl font-bold sm:text-3xl">
                 {`Featured Projects`}
@@ -66,7 +66,7 @@ export function Main({apiData}: { apiData: jsonPlaceHolder[] }) {
 
         {/*DataType Sections*/}
         <section className="bg-muted py-12 sm:py-20">
-          <div className="container px-4 sm:px-6 lg:px-8">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-8 flex items-center justify-between">
               <h2 className="text-2xl font-bold sm:text-3xl">
                 {`Insights`}
@@ -90,7 +90,7 @@ export function Main({apiData}: { apiData: jsonPlaceHolder[] }) {
 
         {/*About ProjectHub*/}
         <section className="py-12 sm:py-20">
-          <div className="container px-4 sm:px-6 lg:px-8">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-8 flex items-center justify-between">
               <h2 className="text-2xl font-bold sm:text-3xl">
                 {`About ProjectHub`}
