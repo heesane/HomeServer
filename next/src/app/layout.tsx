@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     icons: {
         icon: "/logo.webp",
     },
-    authors: [{name:"Heesang Hwang",url:"https://www.heesang.pro"}]
+    authors: [{name:"Heesang Hwang",url:"https://github.com/heesane"}]
 };
 
 export default function RootLayout({
