@@ -1,11 +1,9 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import type {Metadata} from "next";
+import {Inter} from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/header";
-import { Footer } from "@/components/footer";
+import {Header} from "@/components/header";
+import {Footer} from "@/components/footer";
 import React from "react";
-import {ThemeToggleButton} from "@/components/themeToggleButton";
-import {ThemeProvider} from "@/components/themeContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,9 +25,6 @@ export default function RootLayout({
         <html lang="kr">
         <body className={`${inter.className} flex flex-col min-h-screen`}>
         <Header />
-        <ThemeProvider>
-            <ThemeToggleButton />
-        </ThemeProvider>
         <main className="flex-1">
             {children}
         </main>
