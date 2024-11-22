@@ -58,3 +58,42 @@ export const projectsTemp = [
 
     },
 ];
+
+export const domainData: Record<string, { name: string,image: string; description: string; url: string }> = {
+    "Monitoring": {
+        name: "Monitoring",
+        image: "/png/monitoring.png",
+        description: "This domain provides monitoring services for servers and infrastructure, helping you maintain system health.",
+        url: "https://monitoring.coded-by.me",
+    },
+    "Jenkins": {
+        name: "Jenkins",
+        image: "/png/jenkins.png",
+        description: "Jenkins is an open-source automation server that helps automate parts of software development related to building, testing, and deploying.",
+        url: "https://jenkins.coded-by.me",
+    },
+    "NginxDashboard": {
+        name: "Nginx Proxy Manager",
+        image: "/png/nginx-dashboard.png",
+        description: "Nginx Dashboard provides a web interface to manage Nginx configurations and monitor server performance.",
+        url: "https://manager.coded-by.me",
+    },
+    "KibanaDashboard": {
+        name: "Kibana",
+        image: "/png/kibana.png",
+        description: "Kibana Dashboard is an open-source data visualization plugin for Elasticsearch. It provides visualization capabilities on top of the content indexed on an Elasticsearch cluster.",
+        url: "https://kibana.coded-by.me",
+    },
+    "Portainer": {
+        name: "Portainer",
+        image: "/png/portainer.png",
+        description: "Portainer is an open-source tool for managing containerized applications. It provides a user-friendly interface to manage Docker containers, images, networks, and volumes.",
+        url: "https://portainer.coded-by.me",
+    },
+    "KafkaUIDashboard": {
+        name: "Kafka UI",
+        image: "/png/kafka-ui.png",
+        description: "Kafka UI Dashboard is a web-based tool for monitoring and managing Apache Kafka clusters. It provides a user-friendly interface to view topics, partitions, and consumer groups.",
+        url: "https://kafka-ui.coded-by.me",
+    },
+};
