@@ -4,7 +4,7 @@ import { MountainIcon } from "lucide-react";
 export function Footer() {
     return (
         <footer className="mt-auto bg-muted py-8">
-            <div className="container flex flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6 lg:px-8">
+            <div className="container mx-auto flex flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6 lg:px-8">
                 <div className="flex items-center gap-2">
                     <MountainIcon className="h-6 w-6" />
                     <span className="text-sm font-medium">ProjectHub</span>
