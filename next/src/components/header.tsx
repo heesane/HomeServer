@@ -24,6 +24,9 @@ export function Header() {
                     <Link href="/contact" className="text-sm font-medium hover:text-primary" prefetch={false}>
                         Contact
                     </Link>
+                    <Link href="/domain" className="text-sm font-medium hover:text-primary" prefetch={false}>
+                        Domain
+                    </Link>
                 </nav>
                 <div className="flex items-center gap-4">
                     <Link href="/login" prefetch={false}>
