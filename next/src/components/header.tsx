@@ -1,7 +1,6 @@
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
-import {Sheet, SheetContent, SheetTrigger} from "@/components/ui/sheet";
-import {MenuIcon, MountainIcon} from "lucide-react";
+import {MountainIcon} from "lucide-react";
 
 export function Header() {
     return (
