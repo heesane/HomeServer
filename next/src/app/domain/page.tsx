@@ -1,3 +1,4 @@
+import DomainContainer from "@/components/domainContainer";
 
 export default function Domain(){
   return (
@@ -6,7 +7,7 @@ export default function Domain(){
         <div className="px-4 sm:px-6 lg:px-8">
           <h1>Domain</h1>
 
-          <p className="mt-4 text-lg">Coming soon...</p>
+          <DomainContainer/>
         </div>
 
       </div>
