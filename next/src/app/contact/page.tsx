@@ -1,3 +1,4 @@
+import ContactContainer from "@/components/contactContainer";
 
 export default function Contact() {
     return (
@@ -6,7 +7,7 @@ export default function Contact() {
           <div className="px-4 sm:px-6 lg:px-8">
             <h1>Contact</h1>
 
-            <p className="mt-4 text-lg">Coming soon...</p>
+            <ContactContainer/>
           </div>
         </div>
       </div>
