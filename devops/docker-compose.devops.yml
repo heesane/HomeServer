@@ -35,7 +35,19 @@ services:
     networks:
       - home_network
 
-      
+  nginx_stream:
+    image: nginx:latest
+    container_name: nginx_stream
+    restart: always
+    ports:
+      - "9910:9910"
+      - "11111:11111"
+    volumes:
+      - ./nginx/properties/nginx_stream.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/log:/var/log/nginx
+    networks:
+      - home_network
+
   portainer:
     image: portainer/portainer:latest
     container_name: portainer
