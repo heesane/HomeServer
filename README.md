@@ -4,7 +4,3 @@
 
 ## 현재 작업 목록
 
-- [ ] ~~Docker -> K8S Migration~~
-- [ ] Discord Bot With Jenkins
-- [x] Jenkins Web Hook
-

@@ -1,0 +1,141 @@
+networks:
+  home_network:
+    external: true
+
+services:
+  kafka-0:
+    image: docker.io/bitnami/kafka:3.8
+    container_name: kafka-0
+    ports:
+      - "9092"
+      - "19092:19092"
+    environment:
+      # KRaft settings
+      KAFKA_CFG_NODE_ID: 0
+      KAFKA_CFG_PROCESS_ROLES: controller,broker
+      KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: 0@kafka-0:9093,1@kafka-1:9093,2@kafka-2:9093
+      KAFKA_KRAFT_CLUSTER_ID: "abcdefghijklmnopqrstuv"
+      # Listeners
+      KAFKA_CFG_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093,EXTERNAL://:19092
+      KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://kafka-0:9092,EXTERNAL://192.168.55.139:19092
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_CFG_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CFG_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      # Clustering
+      KAFKA_CFG_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+      KAFKA_CFG_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
+      KAFKA_CFG_TRANSACTION_STATE_LOG_MIN_ISR: 2
+    volumes:
+      - kafka_0_data:/bitnami/kafka
+    networks:
+      - home_network
+  
+  kafka-1:
+    image: docker.io/bitnami/kafka:3.8
+    container_name: kafka-1
+    ports:
+      - "9092"
+      - "29092:29092"
+    environment:
+      # KRaft settings
+      KAFKA_CFG_NODE_ID: 1
+      KAFKA_CFG_PROCESS_ROLES: controller,broker
+      KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: 0@kafka-0:9093,1@kafka-1:9093,2@kafka-2:9093
+      KAFKA_KRAFT_CLUSTER_ID: "abcdefghijklmnopqrstuv"
+      # Listeners
+      KAFKA_CFG_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093,EXTERNAL://:29092
+      KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://:9092,EXTERNAL://192.168.55.139:29092
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_CFG_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CFG_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      # Clustering
+      KAFKA_CFG_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+      KAFKA_CFG_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
+      KAFKA_CFG_TRANSACTION_STATE_LOG_MIN_ISR: 2
+    volumes:
+      - kafka_1_data:/bitnami/kafka
+    networks:
+      - home_network
+  
+  kafka-2:
+    image: docker.io/bitnami/kafka:3.8
+    container_name: kafka-2
+    ports:
+      - "9092"
+      - "39092:39092"
+    environment:
+      # KRaft settings
+      KAFKA_CFG_NODE_ID: 2
+      KAFKA_CFG_PROCESS_ROLES: controller,broker
+      KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: 0@kafka-0:9093,1@kafka-1:9093,2@kafka-2:9093
+      KAFKA_KRAFT_CLUSTER_ID: "abcdefghijklmnopqrstuv"
+      # Listeners
+      KAFKA_CFG_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093,EXTERNAL://:39092
+      KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://:9092,EXTERNAL://192.168.55.139:39092
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_CFG_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CFG_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      # Clustering
+      KAFKA_CFG_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+      KAFKA_CFG_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 3
+      KAFKA_CFG_TRANSACTION_STATE_LOG_MIN_ISR: 2
+    volumes:
+      - kafka_2_data:/bitnami/kafka
+    networks:
+      - home_network
+
+  kafka-ui:
+    image: 'provectuslabs/kafka-ui'
+    container_name: kafka-ui
+    networks:
+      - home_network
+    ports:
+      - "10000:8080"
+    depends_on:
+      - kafka-0
+      - kafka-1
+      - kafka-2
+      - schema-registry0
+    environment:
+      KAFKA_CLUSTERS_0_NAME: "OnPremise"
+      KAFKA_CLUSTERS_0_ZOOKEEPER: "zookeeper-0:2181,zookeeper-1:2181,zookeeper-2:2181"
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: "kafka-0:9092,kafka-1:9092,kafka-2:9092"
+      KAFKA_CLUSTERS_0_READONLY: "false"
+      KAFKA_CLUSTERS_0_SCHEMAREGISTRY: "http://schema-registry0:8181"
+      KAFKA_CLUSTERS_0_AUDIT_TOPICAUDITENABLED: 'true'
+      KAFKA_CLUSTERS_0_AUDIT_CONSOLEAUDITENABLED: 'true'
+#      AVRO
+      KAFKA_CLUSTERS_0_VALUE_SERIALIZER: "io.confluent.kafka.serializers.KafkaAvroSerializer"
+      KAFKA_CLUSTERS_0_VALUE_DESERIALIZER: "io.confluent.kafka.serializers.KafkaAvroDeserializer"
+      # String Deserializer
+      KAFKA_CLUSTERS_0_KEY_SERIALIZER: "org.apache.kafka.common.serialization.StringSerializer"
+      KAFKA_CLUSTERS_0_KEY_DESERIALIZER: "org.apache.kafka.common.serialization.StringSerializer"
+
+  ## Schema Registry
+  schema-registry0:
+    image: confluentinc/cp-schema-registry:7.2.1
+    container_name: schema-registry0
+    networks:
+    - home_network
+    ports:
+    - "8181:8181"
+    depends_on:
+    - kafka-0
+    - kafka-1
+    - kafka-2
+    environment:
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: "PLAINTEXT://kafka-0:9092,kafka-1:9092,kafka-2:9092"
+      SCHEMA_REGISTRY_KAFKASTORE_SECURITY_PROTOCOL: PLAINTEXT
+      SCHEMA_REGISTRY_HOST_NAME: "schema-registry0"
+      SCHEMA_REGISTRY_LISTENERS: "http://schema-registry0:8181"
+      SCHEMA_REGISTRY_SCHEMA_REGISTRY_INTER_INSTANCE_PROTOCOL: "http"
+      SCHEMA_REGISTRY_LOG4J_ROOT_LOGLEVEL: INFO
+      SCHEMA_REGISTRY_KAFKASTORE_TOPIC: _schemas
+
+volumes:
+  kafka_0_data:
+    driver: local
+  kafka_1_data:
+    driver: local
+  kafka_2_data:
+    driver: local
