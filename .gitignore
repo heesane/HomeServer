@@ -26,3 +26,4 @@ __pycache__/
 server.log
 back/home_server/gradle.properties
 acme.json
+*.log
