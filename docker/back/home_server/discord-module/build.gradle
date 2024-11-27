@@ -37,8 +37,8 @@ jib{
         image = 'docker.io/ghkd110/discord'
         tags = ['latest', 'test']
         auth {
-            username = findProperty('jib.to.auth.username') ?: " " as Property<String>
-            password = findProperty('jib.to.auth.password') ?: " " as Property<String>
+            username = findProperty('jib.to.auth.username') ?: " "
+            password = findProperty('jib.to.auth.password') ?: " "
 
             if (username == " " || password == " ") {
                 logger.warn("gradle.properties 파일이 있는지 확인")
