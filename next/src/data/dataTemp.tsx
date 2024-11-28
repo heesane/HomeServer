@@ -94,6 +94,6 @@ export const domainData: Record<string, { name: string,image: string; descriptio
         name: "Kafka UI",
         image: "/png/kafka-ui.png",
         description: "Kafka UI Dashboard is a web-based tool for monitoring and managing Apache Kafka clusters. It provides a user-friendly interface to view topics, partitions, and consumer groups.",
-        url: "https://kafka-ui.coded-by.me",
+        url: "https://kafka.coded-by.me",
     },
 };
