@@ -3,7 +3,7 @@
 # Author : Heesane
 # Description: This script will run the Docker Container
 
-FILE_PATH="/home/$USER/server"
+FILE_PATH="/home/$USER/server/docker"
 
 sudo docker compose -f "$FILE_PATH/mq/docker-compose.mq.yml" down
 sudo docker compose -f "$FILE_PATH/database/docker-compose.database.yml" down
