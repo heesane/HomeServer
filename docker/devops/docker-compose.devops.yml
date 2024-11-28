@@ -1,0 +1,165 @@
+version: "3.8"
+
+volumes:
+  portainer:
+    driver: local
+  traefik-certificates:
+  portainer_data:
+  grafana_data:
+  traefik_logs:
+  npm_logs:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./nginx-proxy-manager/data/logs
+      o: bind
+
+
+networks:
+  home_network:
+    external: true
+
+services:
+
+  npm:
+    image: 'docker.io/jc21/nginx-proxy-manager:latest'
+    container_name: npm
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - ./nginx-proxy-manager/data:/data
+      - ./nginx-proxy-manager/letsencrypt:/etc/letsencrypt
+    networks:
+      - home_network
+
+  nginx_stream:
+    image: nginx:latest
+    container_name: nginx_stream
+    restart: always
+    ports:
+      - "9910:9910"
+      - "11111:11111"
+    volumes:
+      - ./nginx/properties/nginx_stream.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/log:/var/log/nginx
+    networks:
+      - home_network
+
+  portainer:
+    image: portainer/portainer:latest
+    container_name: portainer
+    ports:
+      - "9000:9000"
+    restart: always
+    volumes:
+      - portainer:/data
+      - /var/run/docker.sock:/var/run/docker.sock 
+    networks:
+      - home_network
+    # labels:
+    #   - "traefik.enable=true"
+    #   - "traefik.http.routers.portainer.rule=Host(`portainer.heesang.pro`)"
+    #   - "traefik.http.routers.portainer.entrypoints=web"
+    #   - "traefik.http.services.portainer.loadbalancer.server.port=9000"
+ 
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: always
+    user: root
+    env_file:
+      - ./grafana/env.grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./grafana:/var/lib/grafana
+    networks:
+      - home_network
+    # labels:
+    #   - "traefik.enable=true"
+    #   - "traefik.http.routers.grafana.rule=Host(`monitoring.heesang.pro`)"
+    #   - "traefik.http.routers.grafana.entrypoints=web"
+    #   - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./prometheus/config:/etc/prometheus
+      - ./prometheus/volume:/prometheus
+    ports:
+      - "9090:9090"
+    command:
+      - '--web.enable-lifecycle'
+      - '--storage.tsdb.path=/prometheus'
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    user: root
+    restart: always
+    networks:
+      - home_network
+    # labels:
+    #   - "traefik.enable=true"
+    #   - "traefik.http.routers.prometheus.rule=Host(`prometheus.heesang.pro`)"
+    #   - "traefik.http.routers.prometheus.entrypoints=web"
+    #   - "traefik.http.services.prometheus.loadbalancer.server.port=9090"
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: node-exporter
+    restart: unless-stopped
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    ports:
+      - "9100:9100"
+    networks:
+      - home_network
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    ports:
+      - "8080:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    depends_on:
+      - prometheus
+    restart: always
+    networks:
+      - home_network
+
+  jenkins:
+    build:
+      context: .
+      dockerfile: jenkins.Dockerfile
+    restart: always
+    user: root
+    container_name: jenkins
+    ports:
+      - "8090:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock # 중요! 호스트 도커 연결
+      - ./jenkins:/var/jenkins_home
+    networks:
+      - home_network
+    # labels:
+    #   - "traefik.enable=true"
+    #   - "traefik.http.routers.jenkins.rule=Host(`jenkins.heesang.pro`)"  # jenkins.heesang.pro 도메인 매핑
+    #   - "traefik.http.routers.jenkins.entrypoints=web"  # Traefik의 웹 엔트리포인트 사용
+    #   - "traefik.http.services.jenkins.loadbalancer.server.port=8080"  # Jenkins 컨테이너의 내부 포트 지정
+      
+

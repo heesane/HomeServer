@@ -1,0 +1,65 @@
+# Backend Docker Compose
+version: "3.7"
+services:
+  api:
+    image: ghkd110/server:test
+    restart: always
+    ports:
+      - "8000:8000"
+    container_name: api
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/home?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 1234
+      SPRING_PROFILES_ACTIVE: prod
+    volumes:
+      - spring-log:/logs
+    networks:
+      - home_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api.rule=Host(`api.heesang.pro`)"
+      - "traefik.http.routers.api.entrypoints=web"
+      - "traefik.http.services.api.loadbalancer.server.port=8000"
+  batch:
+    image: ghkd110/batch:test
+    restart: always
+    ports:
+      - "8001:8001"
+    container_name: batch
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/home?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 1234
+      SPRING_PROFILES_ACTIVE: prod
+    volumes:
+      - spring-log:/logs
+    networks:
+      - home_network
+  discord:
+    image: ghkd110/discord:test
+    restart: always
+    ports:
+      - "8002:8002"
+    container_name: discord
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/home?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 1234
+      SPRING_PROFILES_ACTIVE: prod
+    volumes:
+      - spring-log:/logs
+    networks:
+      - home_network
+
+networks:
+  home_network:
+      external: true
+
+volumes:
+  spring-log:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ./home_server/logs

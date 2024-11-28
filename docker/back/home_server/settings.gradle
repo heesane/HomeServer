@@ -1,0 +1,8 @@
+rootProject.name = 'home_server'
+include 'domain-module'
+include 'api-module'
+include 'common-module'
+include 'batch-module'
+include 'discord-module'
+include 'auth-module'
+

@@ -4,4 +4,3 @@
 
 ## 현재 작업 목록
 
-- [ ] Docker -> K8S Migration

@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.springboot.name }}
+spec:
+  replicas: {{ .Values.springboot.replica }}
+  selector:
+    matchLabels:
+      app: {{ .Values.springboot.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.springboot.name }}
+    spec:
+      containers:
+        - name: springboot
+          image: "{{ .Values.springboot.image.repository }}:{{ .Values.springboot.image.tag }}"
+          imagePullPolicy: {{ .Values.springboot.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.springboot.port }}
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "{{ .Values.springboot.datasource.url }}"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "{{ .Values.springboot.datasource.username }}"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "{{ .Values.springboot.datasource.password }}"

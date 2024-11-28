@@ -1,0 +1,70 @@
+plugins {
+    id 'com.google.cloud.tools.jib' version '3.4.3'
+}
+
+dependencies {
+    implementation project(":domain-module")
+    implementation project(":common-module")
+
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation 'net.dv8tion:JDA:5.0.1'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+}
+
+jar {
+    preserveFileTimestamps false
+    reproducibleFileOrder true
+}
+
+jib{
+    from {
+        image = 'amazoncorretto:17'
+        platforms {
+//          ARM64 : Mac OS
+//			AMD64 : Windows & Linux
+            platform {
+                architecture = 'amd64'
+                os = 'linux'
+            }
+            platform {
+                architecture = 'arm64'
+                os = 'linux'
+            }
+        }
+    }
+    to {
+        image = 'docker.io/ghkd110/discord'
+        tags = ['latest', 'test']
+        auth {
+            username = findProperty('jib.to.auth.username') ?: " "
+            password = findProperty('jib.to.auth.password') ?: " "
+
+            if (username == " " || password == " ") {
+                logger.warn("gradle.properties 파일이 있는지 확인")
+            }
+        }
+    }
+    container {
+        jvmFlags = ['-Xms512m', '-Xdebug']
+        ports = ['8000']
+        environment = [
+                'SPRING_PROFILES_ACTIVE': 'prod',
+                'NORMAL_PROP': 'NORMAL',
+                'DIRECT_MSG': 'Hello!',
+                'USE_PROFILE': 'prod'
+        ]
+        mainClass = 'hhs.server.discord.DiscordApplication'
+//        format='OCI'
+        creationTime='USE_CURRENT_TIMESTAMP'
+        entrypoint=[
+                'java',
+                '-Dspring.profiles.active=prod',
+                '-Dnormal.prop=${NORM_PROP}',
+                '-Dconfig.healthmsg=${DIRECT_MSG}',
+                '-cp',
+                '/app/resources:/app/classes:/app/libs/*',
+                'hhs.server.discord.DiscordApplication'
+        ]
+    }
+}

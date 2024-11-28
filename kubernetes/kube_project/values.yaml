@@ -1,0 +1,62 @@
+# values.yaml
+
+
+service:
+  type: NodePort
+  port: 8000
+
+redis:
+  replica: 1
+  name: redis
+  enabled: true
+  image: redis:6.2.6
+  service:
+    port: 6379
+  auth:
+    password: "1234"
+    database: "0"
+    timeout: "10000"
+
+mysql:
+  name: mysql
+  replica: 1
+  enabled: true
+  image: mysql:latest
+  service:
+    port: 3306
+  auth:
+    rootPassword: 1234
+    database: home
+    username: home
+    password: 1234
+
+rabbitmq:
+  replica: 1
+  name: rabbitmq
+  enabled: true
+  image: rabbitmq:3-management
+  service:
+    port: 5672
+    managementPort: 15672
+  config:
+    user: guest
+    password: guest
+
+springboot:
+  replica: 1
+  image:
+    repository: ghkd110/server
+    tag: test
+    pullPolicy: Always
+  name: springboot
+  port: 8000
+  datasource:
+    url: jdbc:mysql://mysql:3306/home?serverTimezone=UTC&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true
+    username: "home"
+    password: "1234"
+
+
+ingress:
+  enabled: false
+
+

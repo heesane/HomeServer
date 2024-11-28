@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.redis.name }}
+spec:
+  replicas: {{ .Values.redis.replica }}
+  selector:
+    matchLabels:
+      app: {{ .Values.redis.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.redis.name }}
+    spec:
+      containers:
+        - name: {{ .Values.redis.name }}
+          image: {{ .Values.redis.image }}
+          ports:
+            - containerPort: {{ .Values.redis.service.port }}
+          env:
+            - name: REDIS_PASSWORD
+              value: "{{ .Values.redis.auth.password }}"
+            - name: REDIS_DATABASE
+              value: "{{ .Values.redis.auth.database }}"
+            - name: REDIS_TIMEOUT
+              value: "{{ .Values.redis.auth.timeout }}"

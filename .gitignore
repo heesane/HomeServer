@@ -5,6 +5,7 @@ mysql/
 redis/
 pgadmin/
 grafana/
+jenkins/
 pgadmin/
 !grafana/env.grafana
 prometheus/
@@ -24,3 +25,5 @@ __pycache__/
 .DS_Store
 server.log
 back/home_server/gradle.properties
+acme.json
+*.log

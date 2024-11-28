@@ -1,0 +1,54 @@
+services:
+  springboot:
+    image: ghkd110/server:test
+    restart: on-failure
+    ports:
+      - "8000:8000"
+    container_name: home
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/home?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 1234
+      SPRING_PROFILES_ACTIVE: prod
+    networks:
+      - home_network
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_DATABASE=home
+      - MYSQL_USER=home
+      - MYSQL_PASSWORD=1234
+      - MYSQL_ROOT_HOST=%
+    networks:
+      - hhs-network
+    restart: always
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - hhs-network
+    restart: always
+  rabbitmq:
+    image: "rabbitmq:management"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    restart: unless-stopped
+    container_name: rabbitmq
+    networks:
+      - hhs-network
+
+networks:
+  hhs-network:
+    driver: bridge
+  home_network:
+    driver: bridge
+    external: true
