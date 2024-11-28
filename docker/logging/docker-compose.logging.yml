@@ -17,11 +17,6 @@ services:
       - home_network
       - elk
     restart: unless-stopped
-    # labels:
-    #   - "traefik.enable=true"
-    #   - "traefik.http.routers.elasticsearch.rule=Host(`es.heesang.pro`)"
-    #   - "traefik.http.routers.elasticsearch.entrypoints=web"
-    #   - "traefik.http.services.elasticsearch.loadbalancer.server.port=9200"
 
   logstash:
     image: docker.elastic.co/logstash/logstash:8.7.1
@@ -67,7 +62,7 @@ services:
       - -e
       - --strict.perms=false
     volumes:
-      - back_spring-log:/var/log/host_logs:ro
+      - spring_log:/var/log/host_logs:ro
       - ./filebeat/config/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro,Z
       - type: bind
         source: /var/lib/docker/containers
@@ -85,30 +80,30 @@ services:
     depends_on:
       - elasticsearch
 
-  loki:
-    container_name: loki
-    image: grafana/loki:latest
-    command: -config.file=/etc/loki/local-config.yaml
-    networks:
-      - home_network
+  # loki:
+  #   container_name: loki
+  #   image: grafana/loki:latest
+  #   command: -config.file=/etc/loki/local-config.yaml
+  #   networks:
+  #     - home_network
 
-  promtail:
-    container_name: promtail
-    image:  grafana/promtail:latest
-    volumes:
-      - ./promtail:/etc/promtail/
-      - /var/log:/var/log:ro
-      - /var/lib/docker/containers:/var/lib/docker/containers:ro
-      - /var/run/docker.sock:/var/run/docker.sock
-      - devops_traefik_logs:/traefik/logs/
-      - devops_npm_logs:/nginx/logs/
-    command:
-      - -config.file=/etc/promtail/config.yaml
-      - -config.expand-env=true
-    depends_on:
-      - loki
-    networks:
-      - home_network
+  # promtail:
+  #   container_name: promtail
+  #   image:  grafana/promtail:latest
+  #   volumes:
+  #     - ./promtail:/etc/promtail/
+  #     - /var/log:/var/log:ro
+  #     - /var/lib/docker/containers:/var/lib/docker/containers:ro
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #     - devops_traefik_logs:/traefik/logs/
+  #     - devops_npm_logs:/nginx/logs/
+  #   command:
+  #     - -config.file=/etc/promtail/config.yaml
+  #     - -config.expand-env=true
+  #   depends_on:
+  #     - loki
+  #   networks:
+  #     - home_network
 
 networks:
   home_network:
@@ -122,6 +117,6 @@ volumes:
     external: true
   devops_npm_logs:
     external: true
-  back_spring-log:
+  spring_log:
     external: true
 

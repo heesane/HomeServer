@@ -1,5 +1,11 @@
-# Backend Docker Compose
-version: "3.7"
+networks:
+  home_network:
+      external: true
+
+volumes:
+  spring_log:
+    external: true
+
 services:
   api:
     image: ghkd110/server:test
@@ -49,9 +55,3 @@ services:
     networks:
       - home_network
 
-networks:
-  home_network:
-      external: true
-
-volumes:
-  spring_log:
