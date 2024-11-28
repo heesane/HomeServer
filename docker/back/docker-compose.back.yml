@@ -13,7 +13,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: 1234
       SPRING_PROFILES_ACTIVE: prod
     volumes:
-      - spring-log:/logs
+      - spring_log:/logs
     networks:
       - home_network
     labels:
@@ -33,7 +33,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: 1234
       SPRING_PROFILES_ACTIVE: prod
     volumes:
-      - spring-log:/logs
+      - spring_log:/logs
     networks:
       - home_network
   discord:
@@ -48,7 +48,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: 1234
       SPRING_PROFILES_ACTIVE: prod
     volumes:
-      - spring-log:/logs
+      - spring_log:/logs
     networks:
       - home_network
 
@@ -57,9 +57,9 @@ networks:
       external: true
 
 volumes:
-  spring-log:
+  spring_log:
     driver: local
     driver_opts:
       o: bind
       type: none
-      device: ./home_server/logs
+      device: ./docker/home_server/logs

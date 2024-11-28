@@ -57,11 +57,6 @@ services:
       - elk
     depends_on:
       - elasticsearch
-    # labels:
-    #   - "traefik.enable=true"
-    #   - "traefik.http.routers.kibana.rule=Host(`kibana.heesang.pro`)"
-    #   - "traefik.http.routers.kibana.entrypoints=web"
-    #   - "traefik.http.services.kibana.loadbalancer.server.port=5601"
     restart: unless-stopped
 
   filebeat:
