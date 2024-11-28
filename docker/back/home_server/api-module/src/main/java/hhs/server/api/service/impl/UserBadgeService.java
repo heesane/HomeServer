@@ -1,7 +1,7 @@
 package hhs.server.api.service.impl;
 
 import hhs.server.api.service.BadgeService;
-import hhs.server.common.exceptions.ExceptionCode;
+import hhs.server.domain.exception.ExceptionCode;
 import hhs.server.common.exceptions.exception.DuplicateBadgeException;
 import hhs.server.common.exceptions.exception.NotFoundException;
 import hhs.server.domain.model.dto.request.badge.CreateBadgeRequest;

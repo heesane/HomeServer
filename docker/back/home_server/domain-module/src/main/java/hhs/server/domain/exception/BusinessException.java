@@ -1,7 +1,6 @@
-package hhs.server.common.exceptions.exception;
+package hhs.server.domain.exception;
 
 
-import hhs.server.domain.exception.ExceptionCode;
 import lombok.Getter;
 
 @Getter

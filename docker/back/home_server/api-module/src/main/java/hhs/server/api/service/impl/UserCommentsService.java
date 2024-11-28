@@ -2,7 +2,7 @@ package hhs.server.api.service.impl;
 
 import hhs.server.api.service.CommentsService;
 import hhs.server.domain.aop.badge.BadgeCheck;
-import hhs.server.common.exceptions.ExceptionCode;
+import hhs.server.domain.exception.ExceptionCode;
 import hhs.server.common.exceptions.exception.NotFoundException;
 import hhs.server.common.exceptions.exception.UnmatchedUserException;
 import hhs.server.domain.model.dto.request.comments.DeleteCommentRequest;

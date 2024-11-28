@@ -1,7 +1,7 @@
 package hhs.server.auth.service;
 
 import hhs.server.auth.dto.JwtToken;
-import hhs.server.common.exceptions.ExceptionCode;
+import hhs.server.domain.exception.ExceptionCode;
 import hhs.server.common.exceptions.exception.DuplicatedEmailException;
 import hhs.server.common.exceptions.exception.DuplicatedNicknameException;
 import hhs.server.common.exceptions.exception.UnmatchedPasswordException;

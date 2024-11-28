@@ -2,7 +2,8 @@ package hhs.server.api.service.impl;
 
 
 import hhs.server.api.service.ProjectService;
-import hhs.server.common.exceptions.ExceptionCode;
+import hhs.server.api.util.PictureManager;
+import hhs.server.domain.exception.ExceptionCode;
 import hhs.server.common.exceptions.exception.NotFoundException;
 import hhs.server.common.exceptions.exception.UnmatchedUserException;
 import hhs.server.domain.model.dto.response.project.ListProjectResponse;
@@ -26,7 +27,6 @@ import hhs.server.domain.persistence.User;
 import hhs.server.domain.persistence.elasticsearch.ProjectDocuments;
 import hhs.server.domain.repository.document.ProjectDocumentsRepository;
 import hhs.server.domain.repository.jpa.ProjectRepository;
-import hhs.server.domain.util.PictureManager;
 import hhs.server.domain.validator.Validator;
 import jakarta.transaction.Transactional;
 import java.io.IOException;

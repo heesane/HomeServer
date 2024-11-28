@@ -1,7 +1,7 @@
 package hhs.server.api.service.impl;
 
 import hhs.server.api.service.SearchService;
-import hhs.server.common.exceptions.ExceptionCode;
+import hhs.server.domain.exception.ExceptionCode;
 import hhs.server.common.exceptions.exception.NotFoundException;
 import hhs.server.domain.model.dto.response.project.ProjectDetail;
 import hhs.server.domain.persistence.Projects;

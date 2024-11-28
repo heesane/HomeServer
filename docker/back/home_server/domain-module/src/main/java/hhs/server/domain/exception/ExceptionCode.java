@@ -1,4 +1,4 @@
-package hhs.server.common.exceptions;
+package hhs.server.domain.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,7 +1,7 @@
 package hhs.server.common.exceptions.exception;
 
 
-import hhs.server.common.exceptions.ExceptionCode;
+import hhs.server.domain.exception.ExceptionCode;
 
 public class DuplicatedEmailException extends BusinessException {
 

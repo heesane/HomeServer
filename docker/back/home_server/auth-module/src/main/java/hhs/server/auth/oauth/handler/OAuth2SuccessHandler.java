@@ -2,7 +2,7 @@ package hhs.server.auth.oauth.handler;
 
 
 import hhs.server.auth.service.TokenComponent;
-import hhs.server.common.exceptions.ExceptionCode;
+import hhs.server.domain.exception.ExceptionCode;
 import hhs.server.common.exceptions.exception.NotFoundException;
 import hhs.server.domain.model.type.UserRole;
 import hhs.server.domain.persistence.User;

@@ -1,7 +1,4 @@
-package hhs.server.common.exceptions.exception;
-
-
-import hhs.server.domain.exception.ExceptionCode;
+package hhs.server.domain.exception;
 
 public class NotFoundException extends BusinessException{
 

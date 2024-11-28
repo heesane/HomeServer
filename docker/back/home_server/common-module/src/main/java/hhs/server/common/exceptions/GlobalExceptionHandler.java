@@ -2,6 +2,7 @@ package hhs.server.common.exceptions;
 
 
 import hhs.server.common.exceptions.exception.BusinessException;
+import hhs.server.domain.exception.ExceptionCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

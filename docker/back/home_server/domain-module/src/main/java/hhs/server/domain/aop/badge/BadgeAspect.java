@@ -1,8 +1,9 @@
 package hhs.server.domain.aop.badge;
 
 
-import hhs.server.common.exceptions.ExceptionCode;
-import hhs.server.common.exceptions.exception.NotFoundException;
+
+import hhs.server.domain.exception.ExceptionCode;
+import hhs.server.domain.exception.NotFoundException;
 import hhs.server.domain.persistence.Badge;
 import hhs.server.domain.persistence.User;
 import hhs.server.domain.repository.jpa.BadgeRepository;

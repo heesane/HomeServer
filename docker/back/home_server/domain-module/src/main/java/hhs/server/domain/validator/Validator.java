@@ -1,7 +1,7 @@
 package hhs.server.domain.validator;
 
-import hhs.server.common.exceptions.ExceptionCode;
-import hhs.server.common.exceptions.exception.NotFoundException;
+import hhs.server.domain.exception.ExceptionCode;
+import hhs.server.domain.exception.NotFoundException;
 import hhs.server.domain.persistence.Comments;
 import hhs.server.domain.persistence.Projects;
 import hhs.server.domain.persistence.User;

@@ -1,5 +1,6 @@
 package hhs.server.common.exceptions;
 
+import hhs.server.domain.exception.ExceptionCode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
