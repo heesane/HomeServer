@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FILE_PATH="/home/$USER/server"
+FILE_PATH="/home/$USER/server/docker"
 
 if [ $# -lt 1 ]; then
     echo "사용법: $0 <parameter 1> example) back"
@@ -8,7 +8,7 @@ if [ $# -lt 1 ]; then
 fi
 
 if [ "$1" = "mq" ]; then
-    sudo docker compose -f "$FILE_PATH/mq/docker-compose.mq.yml" up -d --build
+    sudo docker compose -f "$FILE_PATH/message_queue/docker-compose.mq.yml" up -d --build
 elif [ "$1" = "database" ]; then
     sudo docker compose -f "$FILE_PATH/database/docker-compose.database.yml" up -d --build
 elif [ "$1" = "devops" ]; then
