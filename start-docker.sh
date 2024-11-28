@@ -5,7 +5,6 @@
 
 FILE_PATH="/home/$USER/server/docker"
 
-sudo docker compose -f "$FILE_PATH/mq/docker-compose.mq.yml" up -d
 sudo docker compose -f "$FILE_PATH/database/docker-compose.database.yml" up -d
 sudo docker compose -f "$FILE_PATH/devops/docker-compose.devops.yml" up -d
 sudo docker compose -f "$FILE_PATH/logging/docker-compose.logging.yml" up -d elasticsearch kibana logstash filebeat
