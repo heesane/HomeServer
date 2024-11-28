@@ -1,0 +1,82 @@
+version: "3.8"
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    environment:
+      - MYSQL_DATABASE=home
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_USER = home
+      - MYSQL_USER_HOST = %
+      - MYSQL_PASSWORD=1234
+      - MYSQL_ROOT_PASSWORD=1234
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    restart: unless-stopped
+    networks:
+      - home_network
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./data/redis:/data
+    restart: always
+    networks:
+      - home_network
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: hhs
+      POSTGRES_PASSWORD: hhs
+      POSTGRES_DB: hhs
+      TZ: Asia/Seoul
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - home_network
+
+  pgadmin:
+    image: "dpage/pgadmin4:latest"
+    container_name: pgadmin
+    user: root
+    environment:
+      PGADMIN_DEFAULT_EMAIL: tees3359@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: 1234
+    volumes:
+      - ./data/pgadmin/:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    restart: always
+    networks:
+      - home_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pgadmin.rule=Host(`pgadmin.heesang.pro`)"
+      - "traefik.http.routers.pgadmin.entrypoints=web"
+      - "traefik.http.services.pgadmin.loadbalancer.server.port=80"
+  redis_insight:
+    image: redislabs/redisinsight:latest
+    container_name: redis_insight
+    ports:
+      - "5540:5540"
+    restart: always
+    networks:
+      - home_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.redis_insight.rule=Host(`insight.heesang.pro`)"
+      - "traefik.http.routers.redis_insight.entrypoints=web"
+      - "traefik.http.services.redis_insight.loadbalancer.server.port=8001"
+networks:
+  home_network:
+    external: true
