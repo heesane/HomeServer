@@ -56,8 +56,8 @@ pipeline {
             }
             steps {
                 script {
-                    // sh "docker compose -f ${DOCKER_COMPOSE_FILE} up -d"
-                    echo "Deploy"
+                    chmod 600 start-docker.sh
+                    sh ./start-docker.sh
                 }
             }
         }
